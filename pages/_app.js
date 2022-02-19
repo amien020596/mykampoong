@@ -1,9 +1,9 @@
+// import 'antd/dist/antd.css';
+import '../assets/antd-custom.less'
 import '../assets/flexbox.less'
 import '../assets/style.less'
 import '../assets/spacing.less'
 import '../assets/form.less'
-import 'antd/dist/antd.css';
-import '../assets/antd-custom.less'
 
 import AccountContext from 'libs/hooks/account';
 import Authentication from 'components/Auth/Authentication'
