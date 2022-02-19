@@ -1,6 +1,8 @@
+import Button from 'antd/lib/button'
 import ContentWrapper from "./ContentWrapper";
 import TransactionItem from "./TransactionItem";
-import { Typography, Button } from "antd";
+import Typography from 'antd/lib/typography';
+
 const { Text, Title } = Typography;
 
 const TRANSACTION_DATA = [

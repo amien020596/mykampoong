@@ -1,4 +1,7 @@
-import { Typography, Form, Select } from 'antd'
+import Form from 'antd/lib/form'
+import Select from 'antd/lib/select'
+import Typography from 'antd/lib/typography'
+
 const { Text } = Typography
 const { Option } = Select
 

@@ -1,8 +1,11 @@
-import { Avatar, Typography, Button } from 'antd'
-import { parseNumber } from 'libs/parser'
-import { useState } from 'react'
-import { usePOS } from 'libs/hooks/pos'
+import Avatar from 'antd/lib/avatar'
+import Button from 'antd/lib/button'
 import InputNumber from 'components/InputNumber'
+import Typography from 'antd/lib/typography'
+import { parseNumber } from 'libs/helpers/parser/parser'
+import { usePOS } from 'libs/hooks/pos'
+import { useState } from 'react'
+
 const { Text } = Typography
 
 export default function POSProductItem({ product }) {

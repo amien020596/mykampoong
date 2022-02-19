@@ -1,66 +1,58 @@
+import { DownOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons'
+
+import AddGuestContent from './Content/AddGuestContent'
+import Button from 'antd/lib/button'
+import Input from 'antd/lib/input'
+import Popover from 'antd/lib/popover'
+import Typography from 'antd/lib/typography'
 import { useState } from 'react'
-import { Typography, Popover, Button, Input } from 'antd'
-import { DownOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons'
+import { useTranslation } from 'next-i18next';
+import { useVacation } from 'libs/hooks/vacation'
+
 const { Text } = Typography
-const content = () => {
-  return (
-    <div style={{padding: '10px 18px'}}>
-      <div className='f mdl f-btw' style={{ marginBottom: 24 }}>
-        <Text style={{ fontSize: 16 }}>Adults</Text>
-        <div className='f mdl'>
-          <Button style={{ height: 32, padding: '0 8px' }}><MinusOutlined /></Button>
-          <Input bordered={false} style={{ width: 50, textAlign: 'center', fontSize: 16, appearance: 'none' }} defaultValue={0} />
-          <Button style={{ height: 32, padding: '0 8px' }}><PlusOutlined /></Button>
-        </div>
-      </div>
-      <div className='f mdl f-btw' style={{ marginBottom: 24 }}>
-        <div className='f f-c'>
-          <Text style={{ fontSize: 16 }}>Children</Text>
-          <Text style={{ fontSize: 12 }}>Age 2-12</Text>
-        </div>
-        <div className='f mdl'>
-          <Button style={{ height: 32, padding: '0 8px' }}><MinusOutlined /></Button>
-          <Input bordered={false} style={{ width: 50, textAlign: 'center', fontSize: 16, appearance: 'none' }} defaultValue={0} />
-          <Button style={{ height: 32, padding: '0 8px' }}><PlusOutlined /></Button>
-        </div>
-      </div>
-      <div className='f mdl f-btw' style={{ marginBottom: 32 }}>
-        <div className='f f-c'>
-          <Text style={{ fontSize: 16 }}>Infants</Text>
-          <Text style={{ fontSize: 12 }}>Under 2</Text>
-        </div> 
-        <div className='f mdl'>
-          <Button style={{ height: 32, padding: '0 8px' }}><MinusOutlined /></Button>
-          <Input bordered={false} style={{ width: 50, textAlign: 'center', fontSize: 16, appearance: 'none' }} defaultValue={0} />
-          <Button style={{ height: 32, padding: '0 8px' }}><PlusOutlined /></Button>
-        </div>
-      </div>
-      <div className='f f-rht'>
-        <Button type='primary' size='large'>Save</Button>
-      </div>
-    </div>
-  )
-}
-export default function AddGuest() {
+
+const AddGuest = (
+) => {
+  const { t } = useTranslation('common')
   const [focus, setFocus] = useState(false)
+  const [label, setLabel] = useState(`${t("Add Guest")}`)
   const handleVisibleChange = e => {
     setFocus(e)
   }
+  const { data } = useVacation.useContainer()
+
+  const handleOnSave = () => {
+    setFocus(false)
+    setLabel(parseLabel())
+  }
+
+  const parseLabel = () => {
+    const guest = data.form?.guest
+    if (guest.adult == 0 && guest?.children == 0 && guest?.infant == 0) {
+      return `${t("Add Guest")}`
+    }
+    return `${data.form?.guest?.adult} ${t("Adult")}, ${data.form?.guest?.children} ${("Children")}, ${data.form?.guest?.infant} ${("Infant")}`
+  }
+
   return (
     <Popover
-      content={content()}
+      content={() => <AddGuestContent onSave={handleOnSave} />}
       placement='bottomLeft'
-      overlayStyle={{ 
+      overlayStyle={{
         width: 333
       }}
       trigger='click'
       overlayClassName='custom'
-      onVisibleChange={handleVisibleChange}
+      visible={focus}
+      onVisibleChange={() => setFocus(!focus)}
+      getPopupContainer={triggerNode => triggerNode.parentNode}
     >
       <div className={`f f-btw mdl inputLike group ${focus && 'focus'}`}>
-        <Text className='input-label'>Guest</Text>
+        <Text className='input-label'>{label}</Text>
         <DownOutlined />
       </div>
     </Popover>
   )
 }
+
+export default AddGuest

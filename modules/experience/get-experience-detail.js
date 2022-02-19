@@ -1,24 +1,21 @@
-import fetcher from 'libs/fetcher'
+import { config } from '../../constants';
+import fetcher from 'libs/fetcher/fetcher'
+import { publicAxiosGet } from 'libs/fetcher/fetcher-get';
 import useSWR from 'swr'
 
+// we can't use swr in here
 const useExperienceDetail = (
   slug,
   options = {
     revalidateOnFocus: false
   }
 ) => {
-  const url = process.env.NEXT_PUBLIC_API_URL + '/vacation/experience/' + slug
+
+  const url = config.NEXT_PUBLIC_API_URL + '/vacation/experience/' + slug
   const experienceDetailSWR = useSWR(url, fetcher, options)
   return experienceDetailSWR
 }
 
-const fetchExperienceDetail = async slug => {
-  return await fetch(process.env.NEXT_PUBLIC_API_URL + '/vacation/experience/' + slug)
-  .then(res => {
-    if(!res.ok) throw new Error('Error')
-    return res.json()
-  })
-  .catch(err => console.log(err))
-}
+const fetchExperienceDetail = async slug => await publicAxiosGet(config.NEXT_PUBLIC_API_URL + '/vacation/experience/' + slug)
 
 export { useExperienceDetail, fetchExperienceDetail }

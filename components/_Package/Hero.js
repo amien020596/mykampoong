@@ -1,10 +1,16 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { Typography, Input, Button } from "antd";
+import Button from 'antd/lib/button'
+import Input from 'antd/lib/input'
 import { SearchOutlined } from "@ant-design/icons";
+import Typography from 'antd/lib/typography';
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { useTranslation } from 'next-i18next';
+
 const { Title, Text } = Typography;
 
-export default function Hero() {
+const Hero = () => {
+  const { t } = useTranslation('common')
+
   const [search, setSearch] = useState("");
   const router = useRouter();
 
@@ -19,7 +25,7 @@ export default function Hero() {
   };
 
   const handleEnter = (e) => {
-    if (e.key === "Enter") handleSearch();
+    // if (e.key === "Enter") handleSearch();
   };
 
   return (
@@ -37,14 +43,14 @@ export default function Hero() {
       </style>
       <div>
         <Title level={1} style={{ fontWeight: 500, letterSpacing: ".03em", margin: "12px 0" }}>
-          Explore Package
+          {t("Explore Package")}
         </Title>
         <Text style={{ fontSize: 18, color: "var(--gray500)", letterSpacing: ".03em", display: "block" }}>
-          Save more, same experience with our package
+          {t("Save more, same experience with our package")}
         </Text>
         <div className="search-wrapper">
           <Input
-            placeholder="Search by location or activity"
+            placeholder={t("Search by location or activity")}
             style={{ maxWidth: 431 }}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleEnter}
@@ -71,3 +77,7 @@ export default function Hero() {
     </div>
   );
 }
+
+
+
+export default Hero

@@ -1,20 +1,24 @@
-import { usePackageList } from "modules/package/get-package-list";
+import Explore from "components/_Service/Explore";
+import Head from "next/head";
+import Hero from "components/_Package/Hero";
+import Layout from "components/Layout/Public";
+import Loading from "components/Response/Loading";
+import MetaHead from "components/_Meta/MetaHead";
+import Pick from "components/Pick";
+import PopularLocation from "components/_Stay/PopularLocation";
 import { groupByLocation } from "libs/group-by-location";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { usePackageList } from "modules/package/get-package-list";
 import { useRouter } from "next/router";
 
-import Layout from "components/Layout/Public";
-import Hero from "components/_Package/Hero";
-import Pick from "components/Pick";
-import Loading from "components/Response/Loading";
-import Explore from "components/_Service/Explore";
-import PopularLocation from "components/_Stay/PopularLocation";
-import Head from "next/head";
+export async function getServerSideProps({ locale }) {
 
-// const pickData = {
-//   title: 'Gianyar, Bali',
-//   services: []
-// }
-
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  }
+}
 export default function PackagePage() {
   const { query } = useRouter();
   const { data, error } = usePackageList({
@@ -29,9 +33,7 @@ export default function PackagePage() {
 
   return (
     <>
-      <Head>
-        <title>Package | MyKampoong</title>
-      </Head>
+      <MetaHead description="Package" title={"Package | MyKampoong"} />
       <Layout>
         <Hero />
         {!data && !error && <Loading />}

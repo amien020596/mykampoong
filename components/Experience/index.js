@@ -1,16 +1,24 @@
-import { Typography, Avatar, Tooltip } from 'antd'
 import { ConsoleSqlOutlined, EnvironmentOutlined, StarFilled } from '@ant-design/icons'
-import { parseName } from 'libs/parser'
-import Tag from 'components/Tag'
-import Gallery from 'components/Gallery'
+
+import Avatar from 'antd/lib/avatar'
 import FacilityItem from './FacilityItem'
-import Scrollbars from 'react-custom-scrollbars'
-import ReviewItem from './ReviewItem'
+import Gallery from 'components/Gallery'
 import ListReview from 'components/_Reviews/ListReview'
+import ReviewItem from './ReviewItem'
 import Reviews from 'components/_Reviews/Reviews'
+import Scrollbars from 'react-custom-scrollbars'
+import Tag from 'components/Tag'
+import Tooltip from 'antd/lib/tooltip'
+import Typography from 'antd/lib/typography'
+import { parseName } from 'libs/helpers/parser/parser'
+import { useTranslation } from 'next-i18next';
+
 const { Text, Title, Paragraph } = Typography
 
-export default function Experience({ dataexp }) {
+const Experience = ({
+  dataexp
+}) => {
+  const { t } = useTranslation('common')
   const data = dataexp?.travel_object
   const { review: reviewsData } = dataexp
 
@@ -34,18 +42,18 @@ export default function Experience({ dataexp }) {
 
       </div>
 
-      <Title level={4} style={{ letterSpacing: '.03em', fontSize: 18, fontWeight: 500, marginBottom: 20 }}>Description</Title>
+      <Title level={4} style={{ letterSpacing: '.03em', fontSize: 18, fontWeight: 500, marginBottom: 20 }}>{t("Description")}</Title>
       <Paragraph
-        ellipsis={{ rows: 4, expandable: true, symbol: <a style={{ display: 'block', marginTop: 10, fontWeight: 500 }}>Read More</a> }}
+        ellipsis={{ rows: 4, expandable: true, symbol: <a style={{ display: 'block', marginTop: 10, fontWeight: 500 }}>{t("Read More")}</a> }}
         style={{ fontSize: 16, lineHeight: '22.67px' }}
       >
         {data.description}
       </Paragraph>
 
-      <Title level={4} style={{ letterSpacing: '.03em', fontSize: 18, fontWeight: 500, marginBottom: 20 }}>Gallery</Title>
+      <Title level={4} style={{ letterSpacing: '.03em', fontSize: 18, fontWeight: 500, marginBottom: 20 }}>{t("Gallery")}</Title>
       <Gallery preview={false} images={data.vacation_images} />
 
-      <Title level={4} style={{ letterSpacing: '.03em', fontSize: 18, fontWeight: 500, marginBottom: 20, marginTop: 40 }}>Amenities</Title>
+      <Title level={4} style={{ letterSpacing: '.03em', fontSize: 18, fontWeight: 500, marginBottom: 20, marginTop: 40 }}>{t("Amenities")}</Title>
       <div className='f f-w' style={{ maxWidth: 400 }}>
         <FacilityItem title='Wifi' img='/images/icon/rss.svg' />
         <FacilityItem title='Breakfast' img='/images/icon/restaurant.svg' />
@@ -72,3 +80,6 @@ export default function Experience({ dataexp }) {
     </div>
   )
 }
+
+
+export default Experience

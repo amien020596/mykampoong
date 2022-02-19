@@ -1,15 +1,23 @@
-import fetcher from "libs/fetcher-post";
+import fetcher, { publicFetcherPost } from "libs/fetcher/fetcher-post";
 
-const authRegister = async (data) => {
-  const url = process.env.NEXT_PUBLIC_API_URL + "/register";
+import { config } from '../../constants';
 
-  return await fetcher(url, data);
+const authRegister = (data) => {
+  const url = config.NEXT_PUBLIC_API_URL + "/register";
+
+  return publicFetcherPost(url, data);
 };
 
 const authLogin = async (data) => {
-  const url = process.env.NEXT_PUBLIC_API_URL + "/login";
+  const url = config.NEXT_PUBLIC_API_URL + "/login";
 
-  return await fetcher(url, data, true);
+  return await publicFetcherPost(url, data);
 };
 
-export { authRegister, authLogin };
+const refreshToken = async (data) => {
+  const url = config.NEXT_PUBLIC_API_URL + "/refresh-token";
+
+  return await fetcher(url, data, true, true, true);
+};
+
+export { authRegister, refreshToken, authLogin };

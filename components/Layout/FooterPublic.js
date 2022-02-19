@@ -1,4 +1,5 @@
-import { Typography } from "antd";
+import Typography from 'antd/lib/typography';
+
 const { Text } = Typography;
 export default function FooterPublic() {
   return (
@@ -14,7 +15,7 @@ export default function FooterPublic() {
       <div className="footer">
         <div className="container f f-btw">
           <div className="f f-c f-start">
-            <img src="/images/logo.svg" className="logo" />
+            <img src="/images/headerlogonotagline.png" className="logo" />
             <Text>Your ultimate excursions experience</Text>
           </div>
           <div className="f f-btw" style={{ width: "60%" }}>

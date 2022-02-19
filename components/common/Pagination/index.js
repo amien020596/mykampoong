@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import Pagination from 'antd/lib/pagination';
 import { useRouter } from "next/router";
-import { Pagination } from "antd";
 
 const DEFAULT_CURRENT = 1;
 

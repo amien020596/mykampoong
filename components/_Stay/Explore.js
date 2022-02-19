@@ -1,8 +1,15 @@
-import { Typography, Button, Select } from "antd";
+import Button from 'antd/lib/button'
 import CardWrapper from "./CardWrapper";
+import Select from 'antd/lib/select'
+import Typography from 'antd/lib/typography';
+import { useTranslation } from 'next-i18next';
+
+
+
 const { Title } = Typography;
 const { Option } = Select;
-export default function Explore({ data }) {
+const Explore = ({ data }) => {
+  const { t } = useTranslation('common')
   return (
     <div className="container" style={{ marginBottom: 100 }}>
       <style jsx>
@@ -17,7 +24,7 @@ export default function Explore({ data }) {
         `}
       </style>
       <Title level={3} style={{ fontWeight: 500, letterSpacing: ".03em" }}>
-        Explore all stay
+        {t("Explore all stay")}
       </Title>
       <div style={{ marginTop: 28 }} className="f mdl">
         <Select
@@ -25,33 +32,35 @@ export default function Explore({ data }) {
           className="btn-style"
           style={{ marginRight: 12 }}
         >
-          <Option value="price">Price</Option>
+          <Option value="price">{t("Price")}</Option>
         </Select>
         <Select
           defaultValue="guest"
           className="btn-style"
           style={{ marginRight: 12 }}
         >
-          <Option value="guest">Guest</Option>
+          <Option value="guest">{t("Guest")}</Option>
         </Select>
         <Select defaultValue="popular" className="btn-style">
-          <Option value="popular">Popular first</Option>
+          <Option value="popular">{t("Popular first")}</Option>
         </Select>
         <div className="separator" />
         <Button className="btn-rad" style={{ marginRight: 12 }}>
-          Guest house
+          {t("Guest house")}
         </Button>
         <Button className="btn-rad" style={{ marginRight: 12 }}>
-          Cottage
+          {t("Cottage")}
         </Button>
         <Button className="btn-rad" style={{ marginRight: 12 }}>
-          Homestay
+          {t("Homestay")}
         </Button>
         <Button className="btn-rad" style={{ marginRight: 12 }}>
-          Outdoor
+          {t("Outdoor")}
         </Button>
       </div>
       <CardWrapper data={data.data} meta={data.pagination} />
     </div>
   );
 }
+
+export default Explore

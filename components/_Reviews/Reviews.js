@@ -1,12 +1,16 @@
-import { Empty } from "antd";
+import Empty from "antd/lib/empty";
 import ListReview from "./ListReview";
+import { useTranslation } from "next-i18next";
 
-function Reviews(props) {
-  const { data: reviewsData } = props;
+const Reviews = ({
+  data,
+}) => {
+  const { t } = useTranslation('common')
+  const reviewsData = data;
   const review = [];
 
   if (reviewsData == null || reviewsData == []) {
-    review.push(<Empty description="No review found" />)
+    review.push(<Empty key={1} description={t("No review found")} />)
   } else {
     if (reviewsData.length > 5) {
       let slicedDataReview = reviewsData.slice(0, 4);
@@ -24,4 +28,7 @@ function Reviews(props) {
 
   return review;
 }
-export default Reviews;
+
+
+
+export default Reviews

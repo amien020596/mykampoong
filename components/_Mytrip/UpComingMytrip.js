@@ -1,15 +1,20 @@
-import { Typography } from 'antd'
-const { Text } = Typography
 import ItemTrip from './ItemTrip'
-export default function UpComingMyTrip({
-  highlight
-}) {
+import Typography from 'antd/lib/typography'
+import { useTranslation } from 'next-i18next';
+
+const { Text } = Typography
+
+const UpComingMyTrip = ({ highlight }) => {
+  const { t } = useTranslation('common')
   return (
     <>
       <Text className='agenda-item-title'>
-        <span style={{ fontWeight: 500 }}>This Week </span>
+        <span style={{ fontWeight: 500 }}>{t("This Week")} </span>
       </Text>
       <ItemTrip />
     </>
   )
 }
+
+
+export default UpComingMyTrip

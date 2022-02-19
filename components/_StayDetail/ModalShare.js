@@ -1,8 +1,9 @@
+import { CopyOutlined } from '@ant-design/icons';
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import Input from 'antd/lib/input'
 import Modal from "antd/lib/modal/Modal";
 import Text from "antd/lib/typography/Text";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { CopyOutlined } from '@ant-design/icons';
-import { Input, message } from "antd";
+import message from 'antd/lib/message';
 
 export default function ModalShare(props) {
   const { vacation } = props.data

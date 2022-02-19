@@ -1,113 +1,44 @@
+import AddGuestContent from './Content/AddGuestContent'
+import { DownOutlined } from "@ant-design/icons";
+import Popover from 'antd/lib/popover'
+import Typography from 'antd/lib/typography';
 import { useState } from "react";
-import { Typography, Popover, Button, Input } from "antd";
-import { useFloat } from "libs/hooks/float";
-import { DownOutlined, PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import { useTranslation } from "next-i18next";
+import { useVacation } from "libs/hooks/vacation";
 
 const { Text } = Typography;
 
-const Content = ({ onSave = () => {} }) => {
-  const [rooms, setRooms] = useState(0);
-  const [guests, setGuests] = useState(0);
 
-  const handleRoomChange = (type) => {
-    if (type === "PLUS") {
-      setRooms(rooms + 1);
-    }
-    if (type === "MINUS") {
-      setRooms(rooms > 0 ? rooms - 1 : 0);
-    }
-  };
-  const handleGuestChange = (type) => {
-    if (type === "PLUS") {
-      setGuests(guests + 1);
-    }
-    if (type === "MINUS") {
-      setGuests(guests > 0 ? guests - 1 : 0);
-    }
-  };
-
-  const handleSave = () => {
-    const data = {
-      rooms,
-      guests
-    };
-    onSave(data);
-  };
-
-  return (
-    <div style={{ padding: "10px 18px" }}>
-      <div className="f mdl f-btw" style={{ marginBottom: 24 }}>
-        <Text style={{ fontSize: 16 }}>Guest</Text>
-        <div className="f mdl">
-          <Button
-            style={{ height: 32, padding: "0 8px" }}
-            onClick={() => handleGuestChange("MINUS")}
-          >
-            <MinusOutlined />
-          </Button>
-          <Input
-            bordered={false}
-            style={{
-              width: 50,
-              textAlign: "center",
-              fontSize: 16,
-              appearance: "none"
-            }}
-            defaultValue={guests}
-            value={guests}
-          />
-          <Button
-            style={{ height: 32, padding: "0 8px" }}
-            onClick={() => handleGuestChange("PLUS")}
-          >
-            <PlusOutlined />
-          </Button>
-        </div>
-      </div>
-      <div className="f mdl f-btw" style={{ marginBottom: 24 }}>
-        <div className="f f-c">
-          <Text style={{ fontSize: 16 }}>Room</Text>
-        </div>
-        <div className="f mdl">
-          <Button
-            style={{ height: 32, padding: "0 8px" }}
-            onClick={() => handleRoomChange("MINUS")}
-          >
-            <MinusOutlined />
-          </Button>
-          <Input
-            bordered={false}
-            style={{
-              width: 50,
-              textAlign: "center",
-              fontSize: 16,
-              appearance: "none"
-            }}
-            defaultValue={rooms}
-            value={rooms}
-          />
-          <Button
-            style={{ height: 32, padding: "0 8px" }}
-            onClick={() => handleRoomChange("PLUS")}
-          >
-            <PlusOutlined />
-          </Button>
-        </div>
-      </div>
-      <div className="f f-rht">
-        <Button type="primary" size="large" onClick={handleSave}>
-          Save
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-export default function AddGuest() {
-  const { data, mutate } = useFloat.useContainer();
+const AddGuest = ({
+  selectedGuest = () => { },
+}) => {
+  const { t } = useTranslation('common')
+  const { data, mutate } = useVacation.useContainer();
 
   const [focus, setFocus] = useState(false);
-  const [label, setLabel] = useState("Guest / Room");
+  const [label, setLabel] = useState(() => {
+    if (data?.form?.rooms && data?.form?.guests) {
+      const rooms = data.form.rooms;
+      const guests = data.form.guests
+
+      return `${guests} ${guests > 1 ? `${t("Guests")}` : `${t("Guest")}`}, ${rooms} ${rooms > 1 ? `${t("Rooms")}` : `${t("Room")}`}`
+    }
+    return `${t("Guest / Room")}`
+  });
+
+  const [guest, setGuest] = useState(() => {
+    if (data?.form?.guests) {
+      return data.form.guests
+    }
+    return false
+  })
+
+  const [room, setRoom] = useState(() => {
+    if (data?.form?.rooms) {
+      return data.form.rooms
+    }
+    return false
+  })
 
   const handleVisibleChange = (e) => {
     setFocus(e);
@@ -115,18 +46,23 @@ export default function AddGuest() {
 
   const handleSave = (values) => {
     const { rooms, guests } = values;
-    setLabel(
-      `${guests} ${guests > 1 ? "Guests" : "Guest"}, ${rooms} ${
-        rooms > 1 ? "Rooms" : "Room"
-      }`
-    );
-    mutate({ ...data, guests, rooms });
+    selectedGuest(true)
+    setLabel(`${guests} ${guests > 1 ? `${t("Guests")}` : `${t("Guest")}`}, ${rooms} ${rooms > 1 ? `${t("Rooms")}` : `${t("Room")}`}`);
+    mutate({
+      ...data,
+      form: {
+        ...data.form,
+        total_dewasa: guests,
+        guests,
+        rooms,
+      }
+    });
     setFocus(false);
   };
 
   return (
     <Popover
-      content={<Content onSave={handleSave} />}
+      content={<AddGuestContent guest={guest} room={room} onSave={handleSave} />}
       placement="bottomLeft"
       overlayStyle={{
         width: 333
@@ -144,3 +80,5 @@ export default function AddGuest() {
     </Popover>
   );
 }
+
+export default AddGuest

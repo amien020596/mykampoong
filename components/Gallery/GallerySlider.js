@@ -1,6 +1,9 @@
-import { Typography, Button } from 'antd';
 import { CloseOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
+
+import Button from 'antd/lib/button'
+import Typography from 'antd/lib/typography';
 import { useState } from 'react';
+
 const { Title, Text } = Typography;
 
 export default function GallerySlider({

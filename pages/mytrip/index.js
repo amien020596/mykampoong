@@ -1,126 +1,55 @@
-import Layout from "../../components/Layout/Public";
-import Head from 'next/head';
+import { useEffect, useState } from 'react';
+
+import Button from 'antd/lib/button'
 import CardSlider from "components/_Mytrip/CardSlider";
-import { Typography, Tabs, Button } from "antd";
+import Head from 'next/head';
+import Layout from "../../components/Layout/Public";
+import MetaHead from 'components/_Meta/MetaHead';
 import OnGoingMyTrip from "components/_Mytrip/OnGoingMyTrip";
-import WaitingPaymentMyTrip from "components/_Mytrip/WaitingPayment";
-import UpComingMyTrip from "components/_Mytrip/UpComingMytrip";
 import PastMyTrip from "components/_Mytrip/PastMyTrip";
+import Payment from 'components/_Checkout/Payment';
+import Tabs from 'antd/lib/tabs'
+import Typography from 'antd/lib/typography';
+import UpComingMyTrip from "components/_Mytrip/UpComingMytrip";
+import WaitingPaymentMyTrip from "components/_Mytrip/WaitingPayment";
+import { authorizeFetchListPendingPayment } from 'modules/myPersonalTrip/get-pending-payment';
+import { message } from 'antd';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next';
+
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
-const data = [
-  {
-    count_review: 0,
-    description: "Package Honeymoon",
-    featured_image: "https://app.mykampoong.com/storage/taro/akomodasi/komang-petak-homestay/Taro_Komang%20Petak%20Home%20Stay_1.jpg",
-    id: 67,
-    latitude: "-6.97748806",
-    location: "Gianyar, Tegallalang",
-    longtitude: "110.43790900",
-    name: "Package Honeymoon",
-    rating_review: 0,
-    service: "Package",
-    slug: "package-honeymoon",
-    tourist_actors:
-      [{ joined_date: "2021-06-07" }],
-    owner_name: "Desa Wisata MyKampoong",
-    service_name: "Desa Wisata MyKampoong,",
-    vacation_images: [
-      "https://app.mykampoong.com/https://loremflickr.com/cache/resized/65535_50880385713_4ed54485b5_b_600_400_nofilter.jpg/name.jpg"
-    ],
-    vacation_price: "300000.00"
-  }, {
-    count_review: 0,
-    description: "Package Honeymoon",
-    featured_image: "https://app.mykampoong.com/storage/taro/akomodasi/komang-petak-homestay/Taro_Komang%20Petak%20Home%20Stay_1.jpg",
-    id: 67,
-    latitude: "-6.97748806",
-    location: "Gianyar, Tegallalang",
-    longtitude: "110.43790900",
-    name: "Package Honeymoon",
-    rating_review: 0,
-    service: "Package",
-    slug: "package-honeymoon",
-    tourist_actors:
-      [{ joined_date: "2021-06-07" }],
-    owner_name: "Desa Wisata MyKampoong",
-    service_name: "Desa Wisata MyKampoong,",
-    vacation_images: [
-      "https://app.mykampoong.com/https://loremflickr.com/cache/resized/65535_50880385713_4ed54485b5_b_600_400_nofilter.jpg/name.jpg"
-    ],
-    vacation_price: "300000.00"
-  },
-  {
-    count_review: 0,
-    description: "Package Honeymoon",
-    featured_image: "https://app.mykampoong.com/storage/taro/akomodasi/komang-petak-homestay/Taro_Komang%20Petak%20Home%20Stay_1.jpg",
-    id: 67,
-    latitude: "-6.97748806",
-    location: "Gianyar, Tegallalang",
-    longtitude: "110.43790900",
-    name: "Package Honeymoon",
-    rating_review: 0,
-    service: "Package",
-    slug: "package-honeymoon",
-    tourist_actors:
-      [{ joined_date: "2021-06-07" }],
-    owner_name: "Desa Wisata MyKampoong",
-    service_name: "Desa Wisata MyKampoong,",
-    vacation_images: [
-      "https://app.mykampoong.com/https://loremflickr.com/cache/resized/65535_50880385713_4ed54485b5_b_600_400_nofilter.jpg/name.jpg"
-    ],
-    vacation_price: "300000.00"
-  },
-  {
-    count_review: 0,
-    description: "Package Honeymoon",
-    featured_image: "https://app.mykampoong.com/storage/taro/akomodasi/komang-petak-homestay/Taro_Komang%20Petak%20Home%20Stay_1.jpg",
-    id: 67,
-    latitude: "-6.97748806",
-    location: "Gianyar, Tegallalang",
-    longtitude: "110.43790900",
-    name: "Package Honeymoon",
-    rating_review: 0,
-    service: "Package",
-    slug: "package-honeymoon",
-    tourist_actors:
-      [{ joined_date: "2021-06-07" }],
-    owner_name: "Desa Wisata MyKampoong",
-    service_name: "Desa Wisata MyKampoong,",
-    vacation_images: [
-      "https://app.mykampoong.com/https://loremflickr.com/cache/resized/65535_50880385713_4ed54485b5_b_600_400_nofilter.jpg/name.jpg"
-    ],
-    vacation_price: "300000.00"
-  },
-  {
-    count_review: 0,
-    description: "Package Honeymoon",
-    featured_image: "https://app.mykampoong.com/storage/taro/akomodasi/komang-petak-homestay/Taro_Komang%20Petak%20Home%20Stay_1.jpg",
-    id: 67,
-    latitude: "-6.97748806",
-    location: "Gianyar, Tegallalang",
-    longtitude: "110.43790900",
-    name: "Package Honeymoon",
-    rating_review: 0,
-    service: "Package",
-    slug: "package-honeymoon",
-    tourist_actors:
-      [{ joined_date: "2021-06-07" }],
-    owner_name: "Desa Wisata MyKampoong",
-    service_name: "Desa Wisata MyKampoong,",
-    vacation_images: [
-      "https://app.mykampoong.com/https://loremflickr.com/cache/resized/65535_50880385713_4ed54485b5_b_600_400_nofilter.jpg/name.jpg"
-    ],
-    vacation_price: "300000.00"
-  },
+const data = []
 
-]
-export default function index() {
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    }
+  };
+}
+const index = () => {
+  const [pendingPaymentData, setPendingPaymentData] = useState([])
 
-  function callback(key) {
-    console.log(key);
+  useEffect(() => {
+    authorizeFetchListPendingPayment()
+      .then(response => {
+        if (response?.my_trip) {
+          setPendingPaymentData(response.my_trip)
+        }
+      })
+      .catch()
+
+  }, [])
+
+  const openUrlPayment = (url) => {
+    if (url) {
+      window.open(url, "_blank");
+    } else {
+      message.error('open payment link error')
+    }
   }
-
+  const { t } = useTranslation('common')
   return (
     <>
       <style jsx>
@@ -130,33 +59,45 @@ export default function index() {
           }
         `}
       </style>
-      <Head>
-        <title>My Trip | MyKampoong</title>
-      </Head>
+
+      <MetaHead description="My Trip" title={"My Trip | MyKampoong"} />
       <Layout>
         <div className="hero-image" style={{ padding: "30px 0", height: "100%" }}>
           <div className="container">
             <Title level={1} style={{ fontWeight: 500, letterSpacing: ".03em", margin: "12px 0" }}>
-              My Trip
+              {t("My Trip")}
             </Title>
-            <Tabs defaultActiveKey="1" onChange={callback}>
-              <TabPane tab="On Going" key="1">
+            <Tabs defaultActiveKey="1">
+              <TabPane tab={t("On Going")} key="1">
                 <OnGoingMyTrip />
               </TabPane>
-              <TabPane tab="Wating For Payment" key="2">
-                <div className='f mdl f-btw'>
-                  <Button type="primary" style={{ marginBottom: 10 }}>Continue checkout</Button>
-                  <Text className='agenda-item-title'>
-                    <span style={{ fontWeight: 500 }}>Total </span>
-                    Rp 7.000.000
-                  </Text>
-                </div>
-                <WaitingPaymentMyTrip />
+              <TabPane tab={t("Wating For Payment")} key="2">
+
+                {pendingPaymentData.length > 0 && pendingPaymentData.map((pendingPayment, index) => {
+                  return (
+                    <div key={index}>
+                      <div className='f mdl f-btw'>
+                        <Button type="primary" style={{ marginBottom: 10 }} onClick={() => openUrlPayment(pendingPayment.url_payment)}>{t("Continue checkout")}</Button>
+                        <Text className='agenda-item-title'>
+                          <span style={{ fontWeight: 500 }}>Total </span>
+                          Rp 7.000.000??
+                        </Text>
+                      </div>
+                      {
+                        pendingPayment.data_trip.map((datatrip, index) => {
+                          return <WaitingPaymentMyTrip key={index} data={datatrip} />
+                        })
+                      }
+                    </div>)
+                })
+
+                }
+
               </TabPane>
-              <TabPane tab="Upcoming" key="3">
+              <TabPane tab={t("Upcoming")} key="3">
                 <UpComingMyTrip />
               </TabPane>
-              <TabPane tab="Past" key="4">
+              <TabPane tab={t("Past")} key="4">
                 <PastMyTrip />
               </TabPane>
             </Tabs>
@@ -165,7 +106,10 @@ export default function index() {
             <CardSlider data={data} />
           </div>
         </div>
-      </Layout>
+      </Layout >
     </>
   )
 }
+
+
+export default index

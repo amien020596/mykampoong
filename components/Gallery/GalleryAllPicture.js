@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
-import Masonry from "react-masonry-css";
-import { Button } from "antd";
+import Button from 'antd/lib/button';
 import { CloseOutlined } from "@ant-design/icons";
-import { useState } from "react";
 import GallerySlider from "./GallerySlider";
+import Masonry from "react-masonry-css";
+import PropTypes from "prop-types";
+import { useState } from "react";
 
 const propTypes = {
   /**

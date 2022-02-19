@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { Button } from 'antd'
+import Button from 'antd/lib/button'
 import ServiceSessionInput from './ServiceSessionInput'
+import { useState } from 'react'
 
 const sessionControl = [
   {

@@ -1,8 +1,11 @@
 import Card from "components/Card";
-import { Typography } from "antd";
 import Scrollbars from "react-custom-scrollbars";
+import Typography from 'antd/lib/typography';
+import { useTranslation } from 'next-i18next';
+
 const { Title } = Typography;
-export default function Pick({ data }) {
+const Pick = ({ data }) => {
+  const { t } = useTranslation('common')
   return (
     <div className="container" style={{ paddingBottom: 20 }}>
       <Title level={3} style={{ letterSpacing: ".03em", fontWeight: 500 }}>
@@ -19,7 +22,7 @@ export default function Pick({ data }) {
             {data?.subtitle}
           </span>
         )}
-        <a style={{ marginLeft: 8, fontSize: 16 }}>View more</a>
+        <a style={{ marginLeft: 8, fontSize: 16 }}>{t("View more")}</a>
       </Title>
       <Scrollbars style={{ height: 530, width: "100%" }}>
         <div
@@ -34,3 +37,8 @@ export default function Pick({ data }) {
     </div>
   );
 }
+
+
+
+
+export default Pick

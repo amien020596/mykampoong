@@ -1,10 +1,14 @@
-import { Typography, Button, Select } from "antd";
+import Button from 'antd/lib/button'
 import CardWrapper from "components/_Stay/CardWrapper";
+import Select from 'antd/lib/select'
+import Typography from 'antd/lib/typography';
+import { useTranslation } from 'next-i18next';
 
 const { Title } = Typography;
 const { Option } = Select;
 
-export default function Explore({ data, title = true }) {
+const Explore = ({ data, title = true }) => {
+  const { t } = useTranslation('common')
   const service = data?.data || [];
   return (
     <div className="container" style={{ marginBottom: 100 }}>
@@ -22,7 +26,7 @@ export default function Explore({ data, title = true }) {
 
       {title && (
         <Title level={3} style={{ fontWeight: 500, letterSpacing: ".03em" }}>
-          Explore all services
+          {t("Explore all services")}
         </Title>
       )}
       <div style={{ marginTop: 28 }} className="f mdl">
@@ -31,23 +35,23 @@ export default function Explore({ data, title = true }) {
           className="btn-style"
           style={{ marginRight: 12 }}
         >
-          <Option value="price">Price</Option>
+          <Option value="price">{t("Price")}</Option>
         </Select>
         <Select defaultValue="popular" className="btn-style">
-          <Option value="popular">Popular first</Option>
+          <Option value="popular">{t("Popular first")}</Option>
         </Select>
         <div className="separator" />
         <Button className="btn-rad" style={{ marginRight: 12 }}>
-          Interpreter & tour guide
+          {t("Interpreter & tour guide")}
         </Button>
         <Button className="btn-rad" style={{ marginRight: 12 }}>
-          Photography & videography
+          {t("Photography & videography")}
         </Button>
         <Button className="btn-rad" style={{ marginRight: 12 }}>
-          Rental vehicle
+          {t("Rental vehicle")}
         </Button>
         <Button className="btn-rad" style={{ marginRight: 12 }}>
-          Airport pickup
+          {t("Airport pickup")}
         </Button>
       </div>
 
@@ -56,3 +60,7 @@ export default function Explore({ data, title = true }) {
     </div>
   );
 }
+
+
+
+export default Explore

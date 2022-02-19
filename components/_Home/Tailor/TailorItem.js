@@ -1,4 +1,5 @@
-import { Typography } from 'antd'
+import Typography from 'antd/lib/typography'
+
 const { Text } = Typography
 
 export default function TailorItem({ img, title, description }) {
@@ -24,7 +25,7 @@ export default function TailorItem({ img, title, description }) {
           }
         `}
       </style>
-      <img src={img} /> 
+      <img src={img} />
       <Text style={{ fontWeight: 500, color: '#71717A', margin: '10px 0 5px' }}>{description}</Text>
       <Text style={{ fontSize: 16, color: '#27272A', fontWeight: 500 }}>{title}</Text>
     </div>

@@ -1,9 +1,7 @@
-import fetcher from "libs/fetcher-post";
+import { authorizeFether } from "libs/fetcher/fetcher-post";
+import { config } from "../../constants";
 
-const bookingAddToCart = async (data) => {
-  const url = process.env.NEXT_PUBLIC_API_URL + "/booking/add-to-cart";
+const url = config.NEXT_PUBLIC_API_URL + "/booking/add-to-cart";
 
-  return await fetcher(url, data);
-};
-
-export { bookingAddToCart };
+const bookingAddToCart = async (data) => await authorizeFether(url, data, true, true, true);
+export { bookingAddToCart, bookingAddToCart as useBookNow };

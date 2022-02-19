@@ -1,6 +1,8 @@
-import { Typography } from "antd";
-import { useState, useCallback } from "react";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { useCallback, useState } from "react";
+
+import Typography from 'antd/lib/typography';
+import { useTranslation } from "next-i18next";
 
 const { Title } = Typography;
 
@@ -10,6 +12,7 @@ const containerStyle = {
 };
 
 function Location({ data }) {
+  const { t } = useTranslation('common')
   const [map, setMap] = useState(null);
 
   const { isLoaded } = useJsApiLoader({
@@ -38,7 +41,7 @@ function Location({ data }) {
         level={3}
         style={{ fontWeight: 500, letterSpacing: ".03em", marginBottom: 20 }}
       >
-        Where's the location
+        {t("Where's the location")}
       </Title>
       {isLoaded && (
         <GoogleMap
@@ -61,4 +64,7 @@ function Location({ data }) {
   );
 }
 
-export default React.memo(Location);
+
+
+
+export default React.memo(Location)

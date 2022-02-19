@@ -1,6 +1,10 @@
-import { Modal, Input, Button, Typography } from 'antd'
+import Button from 'antd/lib/button'
+import Input from 'antd/lib/input'
+import Modal from 'antd/lib/modal'
 import { SearchOutlined } from '@ant-design/icons'
+import Typography from 'antd/lib/typography'
 import { useServiceForm } from 'libs/hooks/serviceForm'
+
 const { Text } = Typography
 export default function ServiceLocationModal() {
   const { locationVisible, setLocationVisible } = useServiceForm.useContainer()

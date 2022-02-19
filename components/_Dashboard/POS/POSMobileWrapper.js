@@ -1,7 +1,9 @@
-import { Select, Form } from 'antd'
-import { usePOS } from 'libs/hooks/pos'
-import POSProductItem from './POSProductItem'
+import Form from 'antd/lib/form'
 import POSAction from './POSAction'
+import POSProductItem from './POSProductItem'
+import Select from 'antd/lib/select'
+import { usePOS } from 'libs/hooks/pos'
+
 const { Option } = Select
 
 export default function POSMobileWrapper({ products }) {
@@ -20,8 +22,8 @@ export default function POSMobileWrapper({ products }) {
           </Form.Item>
         </Form>
       </div>
-      { products.map(i => <POSProductItem key={i.id} product={i} />)}
-      { data.length > 0 && <POSAction />}
+      {products.map(i => <POSProductItem key={i.id} product={i} />)}
+      {data.length > 0 && <POSAction />}
     </div>
   )
 }

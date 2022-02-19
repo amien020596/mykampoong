@@ -1,5 +1,10 @@
-import { Modal, Avatar, Tag, Button, Typography } from "antd";
+import Avatar from 'antd/lib/avatar'
+import Button from 'antd/lib/button'
+import Modal from 'antd/lib/modal'
 import { StarFilled } from '@ant-design/icons';
+import Tag from 'antd/lib/tag'
+import Typography from 'antd/lib/typography';
+
 const { Text, Title } = Typography;
 export default function ModalDetails({
   visible,

@@ -9,6 +9,8 @@ export default function ContentWrapper({ children, className, ...restProps }) {
             border-radius: 8px;
             border: solid 1px var(--gray200);
             margin-bottom: 16px;
+            height: 80vh;
+            overflow: hidden;
           }
         `}
       </style>

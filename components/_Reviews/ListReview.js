@@ -2,10 +2,11 @@ import Paragraph from "antd/lib/typography/Paragraph";
 import Text from "antd/lib/typography/Text";
 import { date } from "libs/helpers/date";
 import { useState } from "react";
-
+import { useTranslation } from "react-i18next";
 
 export default function ListReview(props) {
   const [ellipsis, setEllipsis] = useState(true)
+  const { t } = useTranslation('common')
   const { data = {} } = props;
   function openReadMore() {
     setEllipsis(false);
@@ -57,7 +58,7 @@ export default function ListReview(props) {
       <Paragraph ellipsis={ellipsis ? { rows: 3, expandable: false, symbol: "" } : false}>
         {data ? data.review_text : 'No review found'}
       </Paragraph>
-      {ellipsis && <p className="readmore" onClick={openReadMore}>Read more</p>}
+      {ellipsis && <p className="readmore" onClick={openReadMore}>{t("Read More")}</p>}
       <div className='separator' />
     </div>
 

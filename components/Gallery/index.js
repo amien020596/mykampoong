@@ -1,10 +1,12 @@
-import { Typography } from "antd";
+import GalleryAllPicture from "./GalleryAllPicture";
+import Typography from 'antd/lib/typography';
 import { set } from "date-fns";
 import { useState } from "react";
-import GalleryAllPicture from "./GalleryAllPicture";
+import { useTranslation } from "react-i18next";
 
 const { Text } = Typography;
 export default function Gallery({ preview = true, images = [] }) {
+  const { t } = useTranslation()
 
   let [active, setActive] = useState(0);
   const [galleryVisible, setGalleryVisible] = useState(false);
@@ -153,7 +155,7 @@ export default function Gallery({ preview = true, images = [] }) {
               onClick={() => setGalleryVisible(true)}
             >
               <Text style={{ letterSpacing: ".03em", color: "var(--gray800)" }}>
-                View all {images.length} images
+                {t("View all length images", { length: images.length })}
               </Text>
             </div>
             <GalleryAllPicture

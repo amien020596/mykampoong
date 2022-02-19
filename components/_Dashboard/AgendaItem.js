@@ -1,5 +1,8 @@
-import { Typography, Button, Avatar } from 'antd'
+import Avatar from 'antd/lib/avatar'
+import Button from 'antd/lib/button'
 import Tag from 'components/Tag'
+import Typography from 'antd/lib/typography'
+
 const { Text } = Typography
 export default function AgendaItem({ highlight }) {
   return (

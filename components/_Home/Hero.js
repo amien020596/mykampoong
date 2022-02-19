@@ -1,9 +1,24 @@
-import { Typography, Button } from 'antd'
+import Button from 'antd/lib/button'
 import { EnvironmentOutlined } from '@ant-design/icons'
+import Typography from 'antd/lib/typography'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useHome } from 'libs/hooks/home'
+import { useTranslation } from 'next-i18next';
+
 const { Title, Text } = Typography
 
-export default function Hero() {
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      // Will be passed to the page component as props
+    },
+  };
+}
+
+function Hero() {
+  const { t } = useTranslation()
+  
   const { data } = useHome.useContainer()
   const section = data.sectionOne
   return (
@@ -40,7 +55,7 @@ export default function Hero() {
         `}
       </style>
       <div>
-        <Title style={{ fontSize: 48, maxWidth: '80%' }}>{section.title}</Title>
+        <Title style={{ fontSize: 48, maxWidth: '80%' }}>{t(`${section.title}`)}</Title>
         <Text
           style={{
             fontSize: 18,
@@ -49,18 +64,20 @@ export default function Hero() {
             lineHeight: 1.75
           }}
         >
-          {section.description}
+          {t(`${section.description}`)}
         </Text>
 
-        <Button type='primary' style={{ marginTop: 28 }}>Explore package</Button>
+        <Button type='primary' style={{ marginTop: 28 }}>{t("Explore package")}</Button>
       </div>
       <div className='hero-img'>
-        <img src={section.slider[0].file_path + section.slider[0].filename}/>
+        <img src={section.slider[0].file_path + section.slider[0].filename} />
         <div className='location '>
-          <EnvironmentOutlined style={{fontSize: 18, marginRight: 5}}/>
+          <EnvironmentOutlined style={{ fontSize: 18, marginRight: 5 }} />
           <a>Merese Hill, Lombok</a>
         </div>
       </div>
     </div>
   )
 }
+
+export default Hero

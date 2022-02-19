@@ -1,27 +1,36 @@
-import { Typography } from 'antd'
-import { HeartOutlined, UploadOutlined, EnvironmentOutlined } from '@ant-design/icons'
-import { useVacation } from 'libs/hooks/vacation'
-import Paragraph from "antd/lib/typography/Paragraph";
+import { EnvironmentOutlined, HeartOutlined, UploadOutlined } from '@ant-design/icons'
+
+import AccountContext from 'libs/hooks/account'
 import Breadcrumb from './Breadcrumb'
-import Tag from 'components/Tag'
-import Gallery from 'components/Gallery'
 import Experience from 'components/Experience'
-import SimilarPackage from './SimilarPackage'
 import ExploreNearby from './ExploreNearby'
 import Float from './Float'
+import Gallery from 'components/Gallery'
 import Location from 'components/_StayDetail/Location'
+import Paragraph from "antd/lib/typography/Paragraph";
+import Tag from 'components/Tag'
+import Typography from 'antd/lib/typography'
+import { isloginUser } from 'libs/helpers/auth'
+import { useGlobalContext } from 'libs/hooks/global'
 import { useState } from 'react'
-import MetaHead from 'components/_Meta/MetaHead';
+import { useTranslation } from 'react-i18next'
+import { useVacation } from 'libs/hooks/vacation'
 
 const { Text, Title } = Typography
 
 export default function PackageDetail() {
+  const { t } = useTranslation('common')
   const [ellipsis, setEllipsis] = useState(true)
   const { data } = useVacation.useContainer()
   const dataPackage = data?.package || [];
+  const { setModalWishlist } = useGlobalContext.useContainer();
+  const { setLoginModalVisible } = AccountContext.useContainer()
+
   function openReadMore() {
     setEllipsis(false);
   }
+
+  const handleClickModal = () => isloginUser() ? setModalWishlist(true) : setLoginModalVisible(true)
 
   return (
     <div className='container'>
@@ -36,6 +45,7 @@ export default function PackageDetail() {
             width: 100%;
             margin-left: 100px;
             max-width: calc(100% - 683px - 100px);
+            margin-bottom:8.5rem;
           }
           .info-wrapper {
             margin: 40px 0;
@@ -59,22 +69,14 @@ export default function PackageDetail() {
           }
         `}
       </style>
-      <MetaHead
-        site_name={'mykampoong'}
-        // title={dataPackage?.vacation?.name}
-        // description={dataPackage?.vacation?.description}
-        // image={dataPackage?.vacation?.featured_image}
-        imagetype={'image/jpg'}
-        imagewidth={'1200'}
-        imageheight={'1200'}
-      />
+
       <div className='f mdl f-btw'>
         <Breadcrumb />
         <div className='action f mdl'>
           <a className='menu-item'>
             <Text><UploadOutlined style={{ marginRight: 5 }} /> Share</Text>
           </a>
-          <a className='menu-item'>
+          <a className='menu-item' onClick={() => handleClickModal()}>
             <Text><HeartOutlined style={{ marginRight: 5 }} /> Save</Text>
           </a>
         </div>
@@ -118,7 +120,7 @@ export default function PackageDetail() {
 
                 2. Next visit Goa Gajah, or Elephant Cave, is located on the island of Bali near Ubud, in Indonesia. Built in the 9th century, it served as a sanctuary.
               </Paragraph>
-              {ellipsis && <p className="readmore" onClick={openReadMore}>Read more</p>}
+              {ellipsis && <p className="readmore" onClick={openReadMore}>{t("Read More")}</p>}
             </Text>
 
             <div className='separator' />
@@ -133,17 +135,17 @@ export default function PackageDetail() {
 
             <Location />
 
-            <Title level={3} style={{ fontWeight: 500, marginTop: 20 }}>Things to know</Title>
-            <Title level={4} style={{ fontSize: 18, fontWeight: 500, marginBottom: 20 }}>Guest Requirement</Title>
+            <Title level={3} style={{ fontWeight: 500, marginTop: 20 }}>{t("Things to know")}</Title>
+            <Title level={4} style={{ fontSize: 18, fontWeight: 500, marginBottom: 20 }}>{t("Guest Requirement")}</Title>
             <Text style={{ fontSize: 16, lineHeight: '22.67px' }}>
               Up to 10 guests ages 5 and up can attend. Parents may also bring children under 2 years of age.
-              <a style={{ marginTop: 10, fontWeight: 500, display: 'block' }}>Read More</a>
+              <a style={{ marginTop: 10, fontWeight: 500, display: 'block' }}>{t("Read More")}</a>
             </Text>
-            <Title level={4} style={{ fontSize: 18, fontWeight: 500, marginBottom: 20 }}>What to Bring</Title>
+            <Title level={4} style={{ fontSize: 18, fontWeight: 500, marginBottom: 20 }}>{t("What to Bring")}</Title>
             <Text style={{ fontSize: 16, lineHeight: '22.67px' }}>
               · Camera or gopro<br />
               · Bag
-              <a style={{ marginTop: 10, fontWeight: 500, display: 'block' }}>Read More</a>
+              <a style={{ marginTop: 10, fontWeight: 500, display: 'block' }}>{t("Read More")}</a>
             </Text>
 
           </div>

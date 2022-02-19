@@ -1,4 +1,5 @@
-import { Typography } from 'antd'
+import Typography from 'antd/lib/typography'
+
 const { Text } = Typography
 export default function IncludeItem() {
   return (
@@ -23,7 +24,7 @@ export default function IncludeItem() {
           }
         `}
       </style>
-      <img src='/images/icon/bike.svg'/>
+      <img src='/images/icon/bike.svg' />
       <div className='content'>
         <Text style={{ fontSize: 16, letterSpacing: '.03em', fontWeight: 500 }}>Transportation</Text>
         <Text style={{ display: 'block', marginTop: 2 }}>A car with air conditioner</Text>

@@ -1,12 +1,17 @@
-import { Typography, Button, Avatar } from 'antd'
-import Tag from 'components/Tag'
-import { useState } from 'react'
+import Avatar from 'antd/lib/avatar'
+import Button from 'antd/lib/button'
 import ModalDetails from './ModalDetails'
+import Tag from 'components/Tag'
+import Typography from 'antd/lib/typography'
+import { useState } from 'react'
+import { useTranslation } from 'next-i18next';
+
 const { Text } = Typography
-export default function ItemTrip({
+const ItemTrip = ({
   highlight,
-  onWriteReview,
-}) {
+  onWriteReview
+}) => {
+  const { t } = useTranslation('common')
   const [openModal, setOpenModal] = useState(false)
 
   const handleSetModalVisible = () => {
@@ -34,21 +39,21 @@ export default function ItemTrip({
       <div className='f mdl f-btw'>
         <div>
           <Text className='agenda-item-title'>
-            <span style={{ fontWeight: 500 }}>(Ongoing) </span>
+            <span style={{ fontWeight: 500 }}>({t("On Going")}) </span>
             Kanto lampo waterfall
           </Text>
-          <Text style={{ color: 'var(--gray600)', letterSpacing: '.03em' }}>Estimated end at 12.00 (30 mins left)</Text>
+          <Text style={{ color: 'var(--gray600)', letterSpacing: '.03em' }}>{t("Estimated end at")} 12.00 (30 mins left)</Text>
         </div>
         <div>
           {onWriteReview ? (
             <>
-              <Button type="primary" style={{ marginRight: 10 }}>Write review</Button>
-              <Button>Book Again</Button>
+              <Button type="primary" style={{ marginRight: 10 }}>{t("Write review")}</Button>
+              <Button>{t("Book Again")}</Button>
             </>
           ) : (
             <>
-              <Button type="primary" style={{ marginRight: 10 }} >View E-ticket</Button>
-              <Button onClick={handleSetModalVisible}>View details</Button>
+              <Button type="primary" style={{ marginRight: 10 }} >{t("View E-ticket")}</Button>
+              <Button onClick={handleSetModalVisible}>{t("View details")}</Button>
             </>
           )}
         </div>
@@ -63,3 +68,5 @@ export default function ItemTrip({
     </div>
   )
 }
+
+export default ItemTrip

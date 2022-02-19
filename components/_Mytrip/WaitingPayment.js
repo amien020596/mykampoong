@@ -1,16 +1,26 @@
-import { Typography, Button, Avatar, Modal } from 'antd'
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { currency, parseDate, parseDateStartEnd } from 'libs/helpers/parser/parser'
+
+import Avatar from 'antd/lib/avatar'
+import Button from 'antd/lib/button'
+import Modal from 'antd/lib/modal'
 import Tag from 'components/Tag'
+import Typography from 'antd/lib/typography'
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
+
 const { Text } = Typography
-export default function WaitingPayment({
-  highlight
-}) {
+const WaitingPayment = ({
+  highlight,
+  data
+}) => {
+  console.log(data)
+  const { t } = useTranslation('common')
   const [visible, setVisible] = useState(false)
-  const setVisibleModal = () => {
-    setVisible(!visible)
-  }
+
+  const setVisibleModal = () => setVisible(!visible)
+
   const onClose = () => setVisible(false)
+
   const handleRemoveItem = () => {
     console.log("remove item")
   }
@@ -40,23 +50,31 @@ export default function WaitingPayment({
         <div className='f mdl f-btw'>
           <Avatar size={50} src='/images/dump/felix-lam-J7fxkhtOqt0-unsplash2.jpg' shape='square' />
           <div className='f f-c f-start' style={{ marginLeft: 10 }}>
-            <a className='underlined' style={{ marginBottom: 5 }}>Kanto lampo waterfall</a>
-            <Tag type='experience'>EXPERIENCE</Tag>
+            <Text
+              ellipsis={{
+                tooltip: data.travel_object.name,
+              }}
+              // className='underlined'
+              style={{ width: 300, marginBottom: 5 }}>{data.travel_object.name}</Text>
+            <Tag type='experience'>{data.travel_object.service}</Tag>
           </div>
         </div>
-        <div>
-          <Button onClick={setVisibleModal}>Remove</Button>
-        </div>
+        {/* <div>
+          <Button onClick={setVisibleModal}>{t("Remove")}</Button>
+        </div> */}
         <div>
           <Text className='agenda-item-title'>
-            <span style={{ fontWeight: 500 }}>(Ongoing) </span>
-            Kanto lampo waterfall
+            <span style={{ fontWeight: 500 }}>({t("Waiting payment")}) </span>
           </Text>
-          <Text style={{ color: 'var(--gray600)', letterSpacing: '.03em' }}>Estimated end at 12.00 (30 mins left)</Text>
+          <Text style={{ color: 'var(--gray600)', letterSpacing: '.03em' }}>
+            {/* {t("Estimated end at")} */}
+            Valid Payment
+            12.00 (30 mins left)</Text>
         </div>
-        <div className='f f-c f-end' style={{ marginLeft: 10 }}>
-          <Text style={{ letterSpacing: '.03em' }}>RP 7.000.000</Text>
-          <Text style={{ letterSpacing: '.03em' }}>RP 3.500.000 x 2 guest</Text>
+        <div className='f f-c f-start' style={{ marginLeft: 10 }}>
+          <Text style={{ letterSpacing: '.03em' }}>{currency(data.total_price)}</Text>
+          <Text style={{ letterSpacing: '.03em' }}>{currency(data.price)} x {data.total_guest} {t("Guest")}</Text>
+          <Text style={{ letterSpacing: '.03em' }}>{parseDateStartEnd(data.start_date, data.end_date)} {t("Guest")}</Text>
         </div>
       </div>
       <Modal
@@ -65,15 +83,17 @@ export default function WaitingPayment({
         onCancel={onClose}
         footer={[
           <Button key="back" onClick={handleSaveToWishList}>
-            Add to saved item
+            {t("Add to saved item")}
           </Button>,
           <Button key="submit" type="primary" onClick={handleRemoveItem}>
-            Remove
+            {t("Remove")}
           </Button>
         ]}
       >
-        <p>Are you sure want to remove this item from your Trip?</p>
+        <p>{t("Are you sure want to remove this item from your Trip?")}</p>
       </Modal>
-    </div>
+    </div >
   )
 }
+
+export default WaitingPayment

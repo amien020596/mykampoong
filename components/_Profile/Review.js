@@ -1,20 +1,25 @@
-import {Col, Row, Typography, Divider} from 'antd'
+import Col from 'antd/lib/col'
+import Divider from 'antd/lib/divider'
+import Row from 'antd/lib/row'
+import Typography from 'antd/lib/typography'
+import { useTranslation } from 'next-i18next';
 
-const {Text} = Typography
-export default function Review() {
+const { Text } = Typography
+const Review = () => {
+    const { t } = useTranslation('common')
     let component = [];
     let i = 0
 
     return (
         <Col span={16}>
             {(() => {
-                for(i; i<=2; i++) {
+                for (i; i <= 2; i++) {
                     component.push(
-                        <Row className="lg-ml-20">
+                        <Row key={i} className="lg-ml-20">
                             <Col span={24}>
                                 <Row gutter={12}>
                                     <Col>
-                                        <img src="https://via.placeholder.com/45" style={{borderRadius: 45}} alt=""/>
+                                        <img src="https://via.placeholder.com/45" style={{ borderRadius: 45 }} alt="" />
                                     </Col>
                                     <Col>
                                         <h4>Felicia Kurniawati Sasongko</h4>
@@ -28,8 +33,8 @@ export default function Review() {
                                 </Row>
                                 <Row justify="end">
                                     <Col span={12}>
-                                        <Text strong style={{color: 'var(--primaryColor)'}}>
-                                            Read More
+                                        <Text strong style={{ color: 'var(--primaryColor)' }}>
+                                            {t("Read More")}
                                         </Text>
                                     </Col>
                                     <Col span={12}>
@@ -45,7 +50,9 @@ export default function Review() {
                 }
                 return component
             })()}
-            
+
         </Col>
     )
 }
+
+export default Review

@@ -1,5 +1,6 @@
-import POSMobileWrapper from 'components/_Dashboard/POS/POSMobileWrapper'
 import Head from 'next/head'
+import MetaHead from 'components/_Meta/MetaHead'
+import POSMobileWrapper from 'components/_Dashboard/POS/POSMobileWrapper'
 import { usePOS as PosContext } from 'libs/hooks/pos'
 
 const dummy = [
@@ -15,13 +16,12 @@ const dummy = [
   },
 ]
 
-export default function POSPage(){
+export default function POSPage() {
   return (
     <PosContext.Provider>
-      <Head>
-        <title>POS | MyKampoong</title>
-      </Head>
-      <POSMobileWrapper products={dummy}/>
+
+      <MetaHead description="POS" title={"POS | MyKampoong"} />
+      <POSMobileWrapper products={dummy} />
     </PosContext.Provider>
   )
 }

@@ -1,20 +1,49 @@
-import { Typography, Button } from 'antd'
 import { HeartOutlined, MessageOutlined, ShareAltOutlined } from '@ant-design/icons'
-import { useVacation } from 'libs/hooks/vacation'
-import { parseNumber } from 'libs/parser'
+import { bookingAddToCart, useBookNow } from 'modules/booking/post-booking'
+import { currency, parseNumber } from 'libs/helpers/parser/parser'
+
+import AccountContext from 'libs/hooks/account'
 import AddDates from './AddDates'
 import AddGuest from './AddGuest'
 import Available from './Available'
+import Button from 'antd/lib/button'
+import { CheckAvailabilityExperience } from 'modules/experience/post-check-availability'
 import ModalShare from 'components/_StayDetail/ModalShare'
+import Typography from 'antd/lib/typography'
+import { format } from 'date-fns'
+import { isloginUser } from 'libs/helpers/auth'
+import message from 'antd/lib/message'
+import { useExperience } from 'libs/hooks/experience'
+import { useGlobalContext } from 'libs/hooks/global'
 import { useState } from 'react'
+import { useTranslation } from 'next-i18next';
+import { useVacation } from 'libs/hooks/vacation'
+
 const { Title, Text } = Typography
 
 
-export default function Float() {
+function Float() {
+  const { t } = useTranslation('common')
   const { data } = useVacation.useContainer()
-  const { vacation: item } = data
-
+  const { visibleDrawer, setVisibleDrawer } = useExperience.useContainer()
+  const { vacation: vacationProperties } = data
   const [modalShow, setModalShow] = useState(false)
+  const { setModalWishlist, setModalMessage, setDataWishlist } = useGlobalContext.useContainer();
+  const { setLoginModalVisible } = AccountContext.useContainer()
+
+  const handleOpenDrawer = () => {
+    setVisibleDrawer(!visibleDrawer)
+  }
+
+  function setOpenModal() {
+    setModalWishlist(true)
+    setDataWishlist({ 'travel_object_id': vacationProperties?.id })
+  }
+
+  const handleClickModal = () => isloginUser() ? setOpenModal() : setLoginModalVisible(true)
+
+  const handleClickModalMessage = () => isloginUser() ? setModalMessage(true) : setLoginModalVisible(true)
+
 
   function handleClick() {
     setModalShow(true)
@@ -22,6 +51,85 @@ export default function Float() {
   function handleCloseModal() {
     setModalShow(false)
   }
+
+  const handleCheckAvailability = async () => {
+    message.info("running function to check avaiability experience")
+    // CheckAvailabilityExperience()
+  }
+
+  function handleBookNow() {
+
+    if (!data.form?.guest || (data.form?.guest.adult === 0 && data.form?.guest.children === 0 && data.form?.guest.infant === 0)) {
+      message.error('Pick Guest first')
+      return;
+    }
+
+    if (!data.form?.date) {
+      message.error('Pick Date first')
+      return;
+    }
+    const dataDateBooking = { ...data.form?.date[0] || null }
+
+    const dataForm = {
+      "start_date": format(dataDateBooking?.startDate, "yyyy-MM-dd HH:mm:ss"),
+      "end_date": format(dataDateBooking?.endDate, "yyyy-MM-dd HH:mm:ss"),
+      "travel_object_id": vacationProperties.id,
+      "total_dewasa": data.form?.guest?.adult || 1,
+      "total_anak_anak": data.form?.guest?.children || 0,
+      "total_balita": data.form?.guest?.infant || 0
+    };
+
+    useBookNow(dataForm).then(response => {
+
+      if (response.success) {
+        setButtonLoading(false)
+        message.success(`${t('Success add experience to cart')}`)
+        setTimeout(() => {
+          Router.push("/checkout");
+        }, 500);
+      } else {
+        message.error(`${t('Failed add experience to cart')}`)
+      }
+    }).catch(error => {
+      message.error(`${t('internal server error')}`)
+    })
+  }
+
+
+  function addToCart() {
+
+    if (!data.form?.guest || (data.form?.guest.adult === 0 && data.form?.guest.children === 0 && data.form?.guest.infant === 0)) {
+      message.error('Pick Guest first')
+      return;
+    }
+
+    if (!data.form?.date) {
+      message.error('Pick Date first')
+      return;
+    }
+    const dataDateBooking = { ...data.form?.date[0] || null }
+
+    const dataForm = {
+      "start_date": format(dataDateBooking?.startDate, "yyyy-MM-dd HH:mm:ss"),
+      "end_date": format(dataDateBooking?.endDate, "yyyy-MM-dd HH:mm:ss"),
+      "travel_object_id": vacationProperties.id,
+      "total_dewasa": data.form?.guest?.adult || 0,
+      "total_anak_anak": data.form?.guest?.children || 0,
+      "total_balita": data.form?.guest?.infant || 0
+    };
+
+    bookingAddToCart(dataForm).then(response => {
+      if (response.success) {
+        message.success(`${t('Success add experience to cart')}`)
+      } else {
+        message.error(`${t('Failed add experience to cart')}`)
+      }
+    }).catch(error => {
+      message.error(`${t('internal server error')}`)
+    })
+  }
+
+
 
   return (
     <div className='wrapper'>
@@ -57,8 +165,8 @@ export default function Float() {
         `}
       </style>
       <div className='p'>
-        <Text>Start from</Text>
-        <Title level={3} style={{ letterSpacing: '.02em', marginTop: 0 }}>Rp. {parseNumber(item.vacation_price * 1)} <span style={{ fontSize: 18, fontWeight: 400 }}>/ person</span></Title>
+        <Text>{t("Start from")}</Text>
+        <Title level={3} style={{ letterSpacing: '.02em', marginTop: 0 }}>{currency(vacationProperties.vacation_price)}<span style={{ fontSize: 18, fontWeight: 400 }}>/ {t("person")}</span></Title>
 
         <div style={{ margin: '20px 0 10px' }} className='f mdl'>
           <AddGuest />
@@ -67,26 +175,29 @@ export default function Float() {
         <div>
           <Available />
           <Available />
-          <Button block type='ghost' size='large' style={{ margin: '12px 0' }}>View more dates</Button>
+          <Button block type='ghost' size='large' style={{ margin: '12px 0' }} onClick={handleOpenDrawer}>{t("View more dates")}</Button>
         </div>
-        <Button block type='primary' size='large' >Check availability</Button>
+        <Button block type='primary' size='large' onClick={() => handleCheckAvailability()}>{t("Check availability")}</Button>
       </div>
       <div className='separator' />
       <div className='f mdl p f-btw action' style={{ paddingTop: 16 }}>
-        <a>
+        <a onClick={() => handleClickModalMessage()}>
           <MessageOutlined />
-          Message
+          {t("Message")}
         </a>
         <a onClick={handleClick}>
           <ShareAltOutlined />
-          Share
+          {t("Share")}
         </a>
-        <a>
+        <a onClick={() => handleClickModal()}>
           <HeartOutlined />
-          Save
+          {t("Save")}
         </a>
       </div>
       <ModalShare visible={modalShow} data={data} onClose={handleCloseModal} />
     </div>
   )
 }
+
+
+export default Float;
