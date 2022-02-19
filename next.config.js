@@ -18,7 +18,7 @@ const themeVariables = lessToJS(
 
 module.exports =
   withPWA(
-    withCss({
+    withSass({
       cssModules: true,
       ...withLess({
         lessLoaderOptions: {
