@@ -1,0 +1,61 @@
+import Head from 'next/head'
+
+export default function MetaHead(props) {
+
+  const description = props?.description || "";
+  const title = props?.title || "";
+  const currentURL = props?.url || "";
+  const image = '/images/default_thumbnail.png'
+  const name = props?.name || "";
+  const featured_image = props?.featured_image || "";
+  const imagetype = 'png'
+
+  const site_name = 'test'
+  const imagewidth = 'test'
+  const imageheight = 'test'
+
+
+  return (
+    <Head>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      // twitter
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:creator" content={site_name} />
+      // twitter open graph
+      <meta property="og:url" content={currentURL} />
+      <meta property="og:image" itemProp="image" content={image} />
+      <meta property="og:site_name" content={site_name} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+
+
+
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link rel="manifest" href="/manifest.json" />
+      <meta name="theme-color" content="#fff" />
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"></link>
+
+      <meta property="og:type" content="website" />
+      <meta property="og:image:type" content={imagetype} />
+      <meta property="og:image:width" content={imagewidth} />
+      <meta property="og:image:height" content={imageheight} />
+      <meta name="twitter:site" content={site_name} />
+
+      <meta property="twitter:site:id" content="1373245128081477639" /> // amien kurniawan
+      <meta property="twitter:title" content={title} />
+      <meta property="twitter:description" content={description} />
+      <meta property="twitter:image" content={image} />
+      <meta property="twitter:image:alt" content={name} />
+      <meta property="twitter:image:src" content={featured_image} />
+      <meta property="twitter:image:width" content={imagewidth} />
+      <meta property="twitter:image:height" content={imageheight} />
+
+      {/* 
+      <link itemProp="thumbnailUrl" href={image} />
+      <span itemProp="thumbnail" itemScope={true} itemType={image}>
+        <link itemProp="url" href={image} />
+      </span> */}
+    </Head>
+  )
+}

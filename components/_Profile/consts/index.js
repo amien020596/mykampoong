@@ -1,0 +1,6 @@
+export const TABS = {
+    TOGGLE_MYTRIP: 0,
+    TOGGLE_PROFILE: 1,
+    TOGGLE_REVIEW: 2,
+    TOGGLE_SETTING: 3
+}

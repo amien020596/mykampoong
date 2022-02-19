@@ -1,0 +1,85 @@
+@screen-xs: 0px;
+@screen-sm: 480px;
+@screen-md: 768px;
+@screen-lg: 992px;
+@screen-xl: 1600px;
+
+.for(@i, @n) {
+  .-each(@i)
+}
+
+.for(@n) when (isnumber(@n)) {
+  .for(1, @n)
+}
+
+.for(@i, @n) when not (@i =@n) {
+  .for((@i + (@n - @i) / abs(@n - @i)), @n);
+}
+
+.for(@array) when (default()) {
+  .for-impl_(length(@array))
+}
+
+.for-impl_(@i) when (@i > 1) {
+  .for-impl_((@i - 1))
+}
+
+.for-impl_(@i) when (@i > 0) {
+  .-each(extract(@array, @i))
+}
+
+@values-array: 0, 5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300;
+
+// global
+@media (min-width: @screen-xs) {
+  .make-space(@prefix: xs);
+}
+// mobile
+@media (min-width: @screen-sm) {
+  .make-space(@prefix: sm);
+}
+// tablet
+@media (min-width: @screen-md) {
+  .make-space(@prefix: md);
+}
+// desktop
+@media (min-width: @screen-lg) {
+  .make-space(@prefix: lg);
+}
+// large screens
+@media (min-width: @screen-xl) {
+  .make-space(@prefix: xl);
+}
+
+// init functions
+.make-space(@prefix) {
+  .for(@values-array);
+  .-each(@value) {
+    .@{prefix}-p-@{value}   { padding:        ~"@{value}px"; }
+    .@{prefix}-pt-@{value}  { padding-top:    ~"@{value}px"; }
+    .@{prefix}-pl-@{value}  { padding-left:   ~"@{value}px"; }
+    .@{prefix}-pr-@{value}  { padding-right:  ~"@{value}px"; }
+    .@{prefix}-pb-@{value}  { padding-bottom: ~"@{value}px"; }
+    .@{prefix}-m-@{value}   { margin:         ~"@{value}px"; }
+    .@{prefix}-mt-@{value}  { margin-top:     ~"@{value}px"; }
+    .@{prefix}-ml-@{value}  { margin-left:    ~"@{value}px"; }
+    .@{prefix}-mr-@{value}  { margin-right:   ~"@{value}px"; }
+    .@{prefix}-mb-@{value}  { margin-bottom:  ~"@{value}px"; }
+    .@{prefix}-my-@{value} {
+      margin-top: ~"@{value}px";
+      margin-bottom: ~"@{value}px";
+    }
+    .@{prefix}-mx-@{value} {
+      margin-left: ~"@{value}px";
+      margin-right: ~"@{value}px";
+    }
+    .@{prefix}-py-@{value} {
+      padding-top: ~"@{value}px";
+      padding-bottom: ~"@{value}px";
+    }
+    .@{prefix}-px-@{value} {
+      padding-left: ~"@{value}px";
+      padding-right: ~"@{value}px";
+    }
+  }
+}
