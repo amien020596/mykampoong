@@ -37,21 +37,21 @@
     }
   },
   "plugins": [
-    [
-      "babel-plugin-styled-components",
-      {
-        "ssr": true,
-        "displayName": true,
-        "preprocess": false
-      }
-    ]
-    // ,
     // [
-    //   "import",
+    //   "babel-plugin-styled-components",
     //   {
-    //     "libraryName": "antd",
-    //     "style": true
+    //     "ssr": true,
+    //     "displayName": true,
+    //     "preprocess": false
     //   }
     // ]
+    // ,
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "style": true
+      }
+    ]
   ]
 }
