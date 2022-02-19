@@ -18,58 +18,45 @@ const themeVariables = lessToJS(
 
 module.exports =
   withPWA(
-    withSass({
-      cssModules: true,
-      ...withLess({
-        lessLoaderOptions: {
-          javascriptEnabled: true,
-          modifyVars: themeVariables, // make your antd custom effective
-          importLoaders: 0
-        },
-        cssLoaderOptions: {
-          importLoaders: 3,
-          localIdentName: '[local]___[hash:base64:5]'
-        },
-        webpack: (config, { isServer }) => {
-          //Make Ant styles work with less
-          if (isServer) {
-            const antStyles = /(antd\/.*?\/style).*(?<![.]js)$/;
-            const origExternals = [...config.externals];
-            config.externals = [
-              (context, request, callback) => {
-                if (request.match(antStyles)) return callback();
-                if (typeof origExternals[0] === 'function') {
-                  origExternals[0](context, request, callback);
-                } else {
-                  callback();
-                }
-              },
-              ...(typeof origExternals[0] === 'function' ? [] : origExternals)
-            ];
+    withLess({
+      lessLoaderOptions: {
+        javascriptEnabled: true,
+        modifyVars: themeVariables, // make your antd custom effective
+      },
+      webpack: (config, { isServer }) => {
+        //Make Ant styles work with less
+        if (isServer) {
+          const antStyles = /antd\/.*?\/style.*?/
+          const origExternals = [...config.externals]
+          config.externals = [
+            (context, request, callback) => {
+              if (request.match(antStyles)) return callback()
+              if (typeof origExternals[0] === 'function') {
+                origExternals[0](context, request, callback)
+              } else {
+                callback()
+              }
+            },
+            ...(typeof origExternals[0] === 'function' ? [] : origExternals),
+          ]
 
-            config.module.rules.unshift({
-              test: antStyles,
-              use: 'null-loader'
-            });
-          }
-          if (!isServer) {
-            config.node = {
-              fs: 'empty'
-            }
-          }
-          return config;
-        },
-        pwa: {
-          dest: "public",
-          register: true,
-          skipWaiting: true,
-          disable: process.env.NODE_ENV === 'development',
-          // disable: true,
-          runtimeCaching,
-        },
-        i18n,
-        webpack5: false,
-      })
+          config.module.rules.unshift({
+            test: antStyles,
+            use: 'null-loader',
+          })
+        }
+        return config;
+      },
+      pwa: {
+        dest: "public",
+        register: true,
+        skipWaiting: true,
+        disable: process.env.NODE_ENV === 'development',
+        // disable: true,
+        runtimeCaching,
+      },
+      i18n,
+      webpack5: false,
     })
   );
 // const withLess = require('@zeit/next-less');
