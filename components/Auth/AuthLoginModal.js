@@ -1,24 +1,17 @@
-import { setAuthData, setToken } from "libs/helpers/auth";
-
-import AccountContext from "libs/hooks/account";
-import Button from 'antd/lib/button'
-import Form from 'antd/lib/form'
-import Input from 'antd/lib/input'
-import Modal from 'antd/lib/modal'
-import Router from "next/router";
-import Typography from 'antd/lib/typography'
-import { authLogin } from "modules/auth/post-auth";
-import { connect } from 'react-redux'
-import message from 'antd/lib/message';
-import { setUserAuth } from "store/actions/authActions";
 import { useState } from "react";
+import { Modal, Typography, Button, Input, Form, message } from "antd";
+import { authLogin } from "modules/auth/post-auth";
+import { setToken } from "libs/helpers/auth";
+import AccountContext from "libs/hooks/account";
+import Router from "next/router";
 
 const { Title, Text } = Typography;
 
-function AuthLoginModal(props) {
+export default function AuthLoginModal() {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const { loginModalVisible, setLoginModalVisible, setRegisterModalVisible } = AccountContext.useContainer();
+  const { loginModalVisible, setLoginModalVisible, setRegisterModalVisible } =
+    AccountContext.useContainer();
 
   const handleOpenRegister = () => {
     setLoginModalVisible(false);
@@ -28,21 +21,17 @@ function AuthLoginModal(props) {
   const handleLogin = async (data) => {
     setLoading(true);
     try {
-
-      authLogin(data).then(response => {
-        if (!response.success) {
-          setLoading(false);
-          message.error(response.message);
-        } else {
-          const { token, refresh_token, expires_in, user } = response.data;
-          setAuthData(JSON.stringify(user));
-          setToken(token, refresh_token, expires_in);
-          props.setUserAuth(true)
-          setLoginModalVisible(false)
-          setLoading(false);
-        }
-      });
-
+      const res = await authLogin(data);
+      const parsed = await res.json();
+      if (!parsed.success) {
+        setLoading(false);
+        message.error(parsed.message);
+      } else {
+        const { token, refresh_token } = parsed.data;
+        setToken(token, refresh_token);
+        Router.push("/host");
+        setLoading(false);
+      }
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -101,16 +90,3 @@ function AuthLoginModal(props) {
     </Modal>
   );
 }
-
-const mapStateToProps = state => {
-  return {
-    userAuth: state.authentication.userAuth || false,
-    // mediaDisplay: state.runtimeReducer.mediaDisplay || "grid",
-  }
-}
-
-const mapDispatchToProps = {
-  setUserAuth
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthLoginModal)

@@ -1,9 +1,7 @@
-import { CheckCircleFilled, PlusCircleFilled } from "@ant-design/icons";
-
 import PropTypes from "prop-types";
-import Typography from 'antd/lib/typography';
-import { parseNumber } from "libs/helpers/parser/parser";
-
+import { Typography } from "antd";
+import { CheckCircleFilled, PlusCircleFilled } from "@ant-design/icons";
+import { parseNumber } from "libs/parser";
 const { Text } = Typography;
 
 const propTypes = {

@@ -1,18 +1,15 @@
-import BestValue from 'components/_Home/BestValue'
-import Experience from 'components/_Home/Experience'
-import Hero from 'components/_Home/Hero'
+import { useEffect } from 'react'
 import { useHome as HomeContext } from 'libs/hooks/home'
 import Layout from 'components/Layout/Public'
-import Place from 'components/_Home/Place'
+import Hero from 'components/_Home/Hero'
 import Tailor from 'components/_Home/Tailor'
+import BestValue from 'components/_Home/BestValue'
 import Trip from 'components/_Home/Trip'
-import { config } from '../constants'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useEffect } from 'react'
+import Place from 'components/_Home/Place'
+import Experience from 'components/_Home/Experience'
 
-export async function getServerSideProps({ locale }) {
-  console.log("locales from index", locale)
-  const res = await fetch(`${config.NEXT_PUBLIC_API_URL}/home`)
+export async function getServerSideProps() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/home`)
   const data = await res.json()
 
   if (!data) {
@@ -22,18 +19,15 @@ export async function getServerSideProps({ locale }) {
   }
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
       data
     },
   }
 }
 
-function Home({ data }) {
-
-  // useEffect(() => {
-  //   document.title = 'Home | MyKampoong'
-  // })
-
+export default function Home({ data }) {
+  useEffect(() => {
+    document.title = 'Home | MyKampoong'
+  })
   return (
     <HomeContext.Provider initialState={data}>
       <Layout>
@@ -48,4 +42,3 @@ function Home({ data }) {
   )
 }
 
-export default Home

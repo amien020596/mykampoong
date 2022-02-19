@@ -1,7 +1,5 @@
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
-
-import Button from 'antd/lib/button'
-import InputNumber from 'antd/lib/input-number'
+import { Button, InputNumber } from 'antd'
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
 
 export default function Input({ onChange, value }) {
   return (

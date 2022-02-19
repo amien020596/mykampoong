@@ -1,5 +1,4 @@
-import Tag from 'antd/lib/tag';
-
+import { Tag } from "antd";
 export default function TagCustom({ type, children }) {
   let textStyle = {};
   let tagStyle = {};

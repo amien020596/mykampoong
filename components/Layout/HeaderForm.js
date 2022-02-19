@@ -1,12 +1,10 @@
-import Button from 'antd/lib/button'
 import { LeftOutlined } from '@ant-design/icons'
-import Link from 'next/link'
+import { Button } from 'antd'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next';
-
+import Link from 'next/link'
 export default function HeaderForm() {
   const router = useRouter();
-  const { t } = useTranslation()
+
   return (
     <div className='header'>
       <style jsx>
@@ -20,12 +18,12 @@ export default function HeaderForm() {
       </style>
       <div className='container f f-btw mdl'>
         <a onClick={() => router.back()} className='back'>
-          <LeftOutlined
+          <LeftOutlined 
             style={{
               marginRight: 12
             }}
           />
-          {t("Back")}
+          Back
         </a>
         <div>
           <Button
@@ -34,15 +32,15 @@ export default function HeaderForm() {
               minWidth: 120
             }}
           >
-            {t("Cancel")}
+            Cancel
           </Button>
-          <Button
+          <Button 
             type='primary'
             style={{
               minWidth: 120
             }}
           >
-            {t("Publish")}
+            Publish
           </Button>
         </div>
       </div>

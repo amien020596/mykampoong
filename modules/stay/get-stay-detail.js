@@ -1,6 +1,4 @@
-import { config } from '../../constants'
-import fetcher from 'libs/fetcher/fetcher'
-import { publicAxiosGet } from 'libs/fetcher/fetcher-get'
+import fetcher from 'libs/fetcher'
 import useSWR from 'swr'
 
 const useStayDetail = (
@@ -9,12 +7,18 @@ const useStayDetail = (
     revalidateOnFocus: false
   }
 ) => {
-
-  const url = config.NEXT_PUBLIC_API_URL + '/vacation/staycation/' + slug
+  const url = process.env.NEXT_PUBLIC_API_URL + '/vacation/staycation/' + slug
   const stayDetailSWR = useSWR(url, fetcher, options)
   return stayDetailSWR
 }
 
-const fetchStayDetail = async slug => await publicAxiosGet(config.NEXT_PUBLIC_API_URL + '/vacation/staycation/' + slug)
+const fetchStayDetail = async slug => {
+  return await fetch(process.env.NEXT_PUBLIC_API_URL + '/vacation/staycation/' + slug)
+  .then(res => {
+    if(!res.ok) throw new Error('Error')
+    return res.json()
+  })
+  .catch(err => console.log(err))
+}
 
 export { useStayDetail, fetchStayDetail }

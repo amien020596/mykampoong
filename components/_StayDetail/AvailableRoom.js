@@ -1,17 +1,7 @@
-import AuthLoginModal from 'components/Auth/AuthLoginModal';
-import Button from 'antd/lib/button'
+import { Typography, Button } from "antd";
 import Room from "./Room";
-import Typography from 'antd/lib/typography';
-import { parseDate } from 'libs/helpers/parser/parser';
-import { useVacation } from 'libs/hooks/vacation';
-
 const { Title, Text } = Typography;
-export default function AvailableRoom({ price, rooms, facilities, vacationId }) {
-  const { data, mutate } = useVacation.useContainer();
-
-  const start_date = parseDate(new Date(data.form.start_date));
-  const end_date = parseDate(new Date(data.form.end_date));
-
+export default function AvailableRoom({ rooms, facilities }) {
   return (
     <div className="container">
       <style jsx>
@@ -30,7 +20,8 @@ export default function AvailableRoom({ price, rooms, facilities, vacationId }) 
           Available Room
           <div className="tag-like">
             <Text style={{ fontSize: 16 }}>
-              {`${start_date} - ${end_date}`}
+              {/* Apr 1 - Apr 3 · 2 Guest / 1 Room */}
+              Tomorrow
             </Text>
           </div>
         </Title>
@@ -41,8 +32,9 @@ export default function AvailableRoom({ price, rooms, facilities, vacationId }) 
           Change
         </Button>
       </div>
-      {rooms.map((room, index) => <Room room={room} price={price} key={index} facilities={facilities} vacationId={vacationId} />)}
-      <AuthLoginModal />
+      {rooms.map((room, index) => (
+        <Room room={room} key={index} facilities={facilities} />
+      ))}
     </div>
   );
 }

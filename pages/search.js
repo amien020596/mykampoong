@@ -1,10 +1,9 @@
-import Explore from "components/_Service/Explore";
-import Head from "next/head";
-import Layout from "components/Layout/Public";
-import MetaHead from "components/_Meta/MetaHead";
-import Search from "components/_Search";
 import { useRouter } from "next/router";
 import { useSearchList } from "modules/search/get-search";
+import Layout from "components/Layout/Public";
+import Explore from "components/_Service/Explore";
+import Search from "components/_Search";
+import Head from "next/head";
 
 export default function SearchPage() {
   const router = useRouter();
@@ -14,7 +13,9 @@ export default function SearchPage() {
 
   return (
     <>
-      <MetaHead description="Search" title={"Search | MyKampoong"} />
+      <Head>
+        <title>Search | MyKampoong</title>
+      </Head>
       <Layout>
         {data && (
           <>

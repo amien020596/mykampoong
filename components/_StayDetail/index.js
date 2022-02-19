@@ -1,38 +1,33 @@
-import { EnvironmentOutlined, StarFilled } from "@ant-design/icons";
-import { parseDate, parseName } from "libs/helpers/parser/parser";
-
-import AvailableRoom from "./AvailableRoom";
-import Avatar from 'antd/lib/avatar'
 import Breadcrumb from "./Breadcrumb";
-import Button from 'antd/lib/button'
-import ExploreNearby from "components/_PackageDetail/ExploreNearby";
-import FacilityItem from "components/Experience/FacilityItem";
-import Float from "./Float";
-import { useFloat as FloatContext } from "libs/hooks/float";
 import Gallery from "components/Gallery";
-import ListReview from "../_Reviews/ListReview";
+import ExploreNearby from "components/_PackageDetail/ExploreNearby";
+import Float from "./Float";
 import Location from "./Location";
-import MetaHead from "components/_Meta/MetaHead";
-import ModalAllReview from "components/_Reviews/ModalAllReview";
+import AvailableRoom from "./AvailableRoom";
+import FacilityItem from "components/Experience/FacilityItem";
 import Review from "./Review";
-import Reviews from "components/_Reviews/Reviews";
 import Tag from "components/Tag";
-import Typography from 'antd/lib/typography';
-import { useState } from "react";
-import { useTranslation } from "next-i18next";
+import { Typography, Button, Avatar } from "antd";
+import { EnvironmentOutlined, StarFilled } from "@ant-design/icons";
 import { useVacation } from "libs/hooks/vacation";
-
+import { useFloat as FloatContext } from "libs/hooks/float";
+import { parseDate, parseName } from "libs/parser";
+import ListReview from "../_Reviews/ListReview";
+import { useState } from "react";
+import ModalAllReview from "components/_Reviews/ModalAllReview";
+import MetaHead from "components/_Meta/MetaHead";
+import Reviews from "components/_Reviews/Reviews";
 const { Text, Title } = Typography;
 
 const MINIMUM_REVIEW_SHOW_BUTTON = 5;
+// const reviewsData = [1, 2, 3, 4, 5, 6];
 
-const StayDetail = () => {
-  const { t } = useTranslation('common')
+export default function StayDetail() {
   const [visibleModalReview, setVisibleModalReview] = useState(false);
   const { data } = useVacation.useContainer();
   const {
     vacation: item,
-    listAvailableRoom,
+    availableRoom,
     facilities,
     review: reviewsData
   } = data;
@@ -60,7 +55,6 @@ const StayDetail = () => {
           .right {
             width: 100%;
             margin-left: 100px;
-            margin-bottom:100px;
             max-width: calc(100% - 683px - 100px);
           }
           .info-wrapper {
@@ -77,7 +71,7 @@ const StayDetail = () => {
           }
         `}
       </style>
-      {/* <MetaHead
+      <MetaHead
         site_name={"mykampoong"}
         title={data?.vacation?.name}
         description={data?.vacation?.description}
@@ -85,12 +79,12 @@ const StayDetail = () => {
         imagetype={"image/jpg"}
         imagewidth={"1200"}
         imageheight={"1200"}
-      /> */}
+      />
       <div className="f mdl f-btw" style={{ padding: "28px 0" }}>
         <Breadcrumb />
       </div>
 
-      <div className="f" style={{ marginBottom: 10 }}>
+      <div className="f" style={{ marginBottom: 50 }}>
         <div className="left">
           <div>
             <Gallery images={item.vacation_images} />
@@ -114,7 +108,7 @@ const StayDetail = () => {
               level={4}
               style={{ fontWeight: 500, letterSpacing: ".03em" }}
             >
-              {t("Description")}
+              Description
             </Title>
             <Text style={{ fontSize: 16, lineHeight: "22.67px" }}>
               {item.description}
@@ -131,7 +125,7 @@ const StayDetail = () => {
                 marginTop: 40
               }}
             >
-              {t("Amenities")}
+              Amenities
             </Title>
             <div className="f f-w">
               <FacilityItem title="Wifi" img="/images/icon/rss.svg" />
@@ -156,17 +150,17 @@ const StayDetail = () => {
                     fontWeight: 500
                   }}
                 >
-                  {t("Hosted by")} {item.tourist_actors.owner_name}
+                  Hosted by {item.tourist_actors.owner_name}
                 </Title>
                 <Text style={{ color: "var(--gray500)" }}>
-                  {t("Joined since")}{" "}
+                  Joined since{" "}
                   {parseDate(item.tourist_actors.joined_date, {
                     year: "numeric",
                     month: "long"
                   })}
                 </Text>
                 <div style={{ marginTop: 24 }}>
-                  <Button>{t("Send message")}</Button>
+                  <Button>Send message</Button>
                 </div>
               </div>
               <div>
@@ -186,7 +180,7 @@ const StayDetail = () => {
           </FloatContext.Provider>
         </div>
       </div>
-      {listAvailableRoom && listAvailableRoom.length > 0 && <AvailableRoom price={item.vacation_price} rooms={listAvailableRoom} vacationId={item.id} facilities={facilities} />}
+      {availableRoom && <AvailableRoom rooms={availableRoom} facilities={facilities} />}
       <div className="separator" style={{ margin: "50px 0" }} />
       <Title
         level={4}
@@ -197,7 +191,7 @@ const StayDetail = () => {
           color: "var(--gray800)"
         }}
       >
-        {item.count_review || 0} {t("Reviews")}
+        {item.count_review || 0} Reviews
         <span style={{ fontSize: 14, color: "var(--gray600)", marginLeft: 12 }}>
           <StarFilled
             style={{ color: "var(--orange500)", fontSize: 20, marginRight: 6 }}
@@ -208,7 +202,7 @@ const StayDetail = () => {
       <Reviews data={reviewsData} />
       {lengthReview > MINIMUM_REVIEW_SHOW_BUTTON && (
         <Button onClick={toggleModalAllReview}>
-          {t("View all length reviews", { length: lengthReview })}
+          View all {lengthReview} reviews
         </Button>
       )}
       <div style={{ marginBottom: 20 }} />
@@ -221,7 +215,3 @@ const StayDetail = () => {
     </div>
   );
 }
-
-
-
-export default StayDetail

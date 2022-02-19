@@ -1,5 +1,4 @@
-import Typography from 'antd/lib/typography';
-
+import { Typography } from "antd";
 const { Text } = Typography;
 
 export default function FacilityItem({ title, small, img, width = 170 }) {

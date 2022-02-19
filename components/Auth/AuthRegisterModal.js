@@ -1,14 +1,16 @@
-import AccountContext from "libs/hooks/account";
-import Button from 'antd/lib/button'
-import Checkbox from 'antd/lib/checkbox'
-import Form from 'antd/lib/form'
-import Input from 'antd/lib/input'
-import Modal from 'antd/lib/modal'
-import Typography from 'antd/lib/typography'
-import { authRegister } from "modules/auth/post-auth";
-import message from 'antd/lib/message';
 import { useState } from "react";
+import {
+  Modal,
+  Typography,
+  Button,
+  Input,
+  Form,
+  Checkbox,
+  message
+} from "antd";
+import { authRegister } from "modules/auth/post-auth";
 
+import AccountContext from "libs/hooks/account";
 const { Title, Text } = Typography;
 
 export default function AuthRegisterModal() {
@@ -25,26 +27,25 @@ export default function AuthRegisterModal() {
     setLoginModalVisible(true);
   };
 
-  const handleRegister = (data) => {
+  const handleRegister = async (data) => {
     setLoading(true);
 
     try {
-      authRegister(data)
-        .then(response => {
-          message.success(response.message);
-          handleOpenLogin();
-        }).catch(error => {
-          const dataError = error.response.data
-          form.setFields(
-            Object.keys(dataError.errors).map((i) => ({
-              name: i,
-              errors: dataError.errors[i]
-            }))
-          );
-        });
-
+      const res = await authRegister(data);
+      const parsed = await res.json();
+      if (!res.ok) {
+        form.setFields(
+          Object.keys(parsed.errors).map((i) => ({
+            name: i,
+            errors: parsed.errors[i]
+          }))
+        );
+        message.error(parsed.message);
+      } else {
+        message.success(parsed.message);
+        handleOpenLogin();
+      }
       setLoading(false);
-
     } catch (error) {
       setLoading(false);
 

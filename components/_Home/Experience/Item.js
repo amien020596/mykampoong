@@ -1,8 +1,7 @@
-import Typography from 'antd/lib/typography'
-
+import { Typography } from 'antd'
 const { Text } = Typography
 
-export default function Item({ img, title }) {
+export default function Item({img, title}) {
   return (
     <div className='item'>
       <style jsx>

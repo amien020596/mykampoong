@@ -1,6 +1,5 @@
 import Header from './HeaderProtected'
 import Sidemenu from './SidemenuProtected'
-
 export default function Protected({ children }) {
   return (
     <>

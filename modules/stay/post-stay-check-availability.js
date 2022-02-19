@@ -1,9 +1,9 @@
-import { config } from "../../constants";
-import { publicFetcherPost } from "libs/fetcher/fetcher-post";
+import fetcher from "libs/fetcher-post";
 
 const stayCheckAvailability = async (slug, data) => {
-  const url = config.NEXT_PUBLIC_API_URL + "/vacation/list-available-room/" + slug;
-  return await publicFetcherPost(url, data);
+  const url = process.env.NEXT_PUBLIC_API_URL + "/list-available-room/" + slug;
+
+  return await fetcher(url, data);
 };
 
 export { stayCheckAvailability };

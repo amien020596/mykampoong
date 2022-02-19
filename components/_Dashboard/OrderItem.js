@@ -1,7 +1,5 @@
-import Avatar from 'antd/lib/avatar'
+import { Typography, Avatar } from 'antd'
 import Tag from 'components/Tag'
-import Typography from 'antd/lib/typography'
-
 const { Text } = Typography
 
 export default function OrderItem() {

@@ -1,7 +1,5 @@
-import Avatar from 'antd/lib/avatar'
-import Typography from 'antd/lib/typography'
-import { parseDate } from 'libs/helpers/parser/parser'
-
+import { Typography, Avatar } from 'antd'
+import { parseDate } from 'libs/parser'
 const { Text, Paragraph } = Typography
 
 export default function ReviewItem({ style, data = {} }) {

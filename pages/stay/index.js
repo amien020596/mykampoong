@@ -1,25 +1,16 @@
+import { useStayList } from "modules/stay/get-stay-list";
+import { groupByLocation } from "libs/group-by-location";
+import { useRouter } from "next/router";
+
+import Layout from "components/Layout/Public";
+import Hero from "components/_Stay/Hero";
+import PopularLocation from "components/_Stay/PopularLocation";
 import DesaWisata from "components/_Stay/DesaWisata";
+import Pick from "components/Pick";
+import Loading from "components/Response/Loading";
 import Explore from "components/_Stay/Explore";
 import Head from "next/head";
-import Hero from "components/_Stay/Hero";
-import Layout from "components/Layout/Public";
-import Loading from "components/Response/Loading";
-import MetaHead from "components/_Meta/MetaHead";
-import Pick from "components/Pick";
-import PopularLocation from "components/_Stay/PopularLocation";
-import { groupByLocation } from "libs/group-by-location";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useRouter } from "next/router";
-import { useStayList } from "modules/stay/get-stay-list";
 
-export async function getServerSideProps({ locale }) {
-
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  }
-}
 export default function StayPage() {
   const { query } = useRouter();
   const { data } = useStayList({
@@ -32,7 +23,9 @@ export default function StayPage() {
   }));
   return (
     <>
-      <MetaHead title={"Stay | MyKampoong"} />
+      <Head>
+        <title>Stay | MyKampoong</title>
+      </Head>
       <Layout>
         <Hero />
         {!data && <Loading />}

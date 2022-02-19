@@ -11,8 +11,6 @@
   --gray200: #E4E4E7;
   --gray100: #F4F4F5;
   --gray50: #FAFAFA;
-  --orange25: #f9741633;
-  --orange50: #f9731682;
   --orange500: #F97316;
   --orange100: #FFEDD5;
   --purple600: #9333EA;
@@ -27,6 +25,7 @@
   --teal400: #2DD4BF;
   --teal500: #14B8A6;
   --teal600: #0D9488;
+  --orange50: #FFF7ED;
   --shadowBase: 0px 1px 2px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 .container {
@@ -78,7 +77,6 @@
     }
   }
 }
-
 .header {
   position: fixed;
   top: 0;
@@ -93,12 +91,9 @@
     margin: 0 14px;
     font-weight: 500;
     padding: 28px 0;
-    &.profile{
-      padding:0;
-    }
     &.disabled {
       span {
-        color: var(--gray400);
+        color: var(--gray400)
       }
     }
     span {
@@ -116,30 +111,6 @@
     margin-right: 30px
   }
 }
-.popover-profile{
-  width:14rem;
-}
-.menu-popover-profile{
-  margin: 0 14px;
-  padding: 5px 0;
-    font-weight: 500;
-    &.disabled {
-      span {
-        color: var(--gray400);
-      }
-    }
-    span {
-      letter-spacing: .03em;
-      transition: .2s ease;
-      color: #000;
-    }
-    &:hover, &.active {
-      span {
-        color: @primary-color
-      }
-    }
-}
-
 
 .footer {
   padding: 83px 0 92px;
@@ -206,7 +177,7 @@ button.ant-btn {
     background: #fff;
     position: absolute;
     top: 0;
-    left: -6.5%;
+    left: -7.5%;
     width: 115%;
     height: 100%;
     z-index: -1;
@@ -383,9 +354,6 @@ button.ant-btn {
   }
   .ant-typography {
     letter-spacing: .03em;
-  }
-  .ant-switch-checked {
-    background-color: var(--orange50); 
   }
   .text {
     color: var(--gray600)

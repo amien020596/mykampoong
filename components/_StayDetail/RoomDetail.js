@@ -1,97 +1,14 @@
-import React, { useState } from 'react';
-import { bookingAddToCart, useBookNow } from "modules/booking/post-booking";
-
-import AccountContext from 'libs/hooks/account';
-import Button from 'antd/lib/button'
 import { CloseOutlined } from "@ant-design/icons";
+import { Typography, Button } from 'antd';
 import FacilityItem from "components/Experience/FacilityItem";
 import Gallery from "components/Gallery";
-import Router from 'next/router';
-import Typography from 'antd/lib/typography';
-import { addToCartDate } from 'libs/helpers/date';
-import { currency } from 'libs/helpers/parser/parser'
-import { isloginUser } from "libs/helpers/auth";
-import message from 'antd/lib/message';
-import { useTranslation } from 'next-i18next';
-import { useVacation } from "libs/hooks/vacation";
-
+import AddDay from './AddDay'
+import GuestRoom from './GuestRoom'
+import { parseNumber } from 'libs/parser'
 const { Title, Text } = Typography;
 
-const RoomDetail = ({ props }) => {
-  const { t } = useTranslation('common')
-  const { setLoginModalVisible } = AccountContext.useContainer()
-  const { data, mutate } = useVacation.useContainer();
-
-  const [bookingLoading, setBookingLoading] = useState(false);
-  const [addToCartLoading, setAddToCartLoading] = useState(false);
-
-  const { onClose, price, room, facilities, vacationId } = props
-
-  let form = {
-    ...data.form,
-    start_date: addToCartDate(data.form.start_date),
-    end_date: addToCartDate(data.form.end_date),
-  }
-
-  // vacationId is id hotel
-  const handleAddtoCart = async vacationId => {
-    if (!isloginUser()) {
-      setLoginModalVisible(true)
-      return;
-    }
-
-    setAddToCartLoading(true)
-    form = {
-      ...form,
-      travel_object_id: vacationId
-    }
-
-    bookingAddToCart(form)
-      .then(response => {
-        if (response.message) {
-          message.success(response.message)
-        } else {
-          message.error(response.message)
-        }
-        setAddToCartLoading(false)
-      }).catch(error => {
-        console.log(error)
-        setAddToCartLoading(false)
-      })
-
-  }
-
-  const handleBookNow = async vacationId => {
-    if (!isloginUser()) {
-      setLoginModalVisible(true)
-      return;
-    }
-
-    setBookingLoading(true)
-    form = {
-      ...form,
-      travel_object_id: vacationId
-    }
-
-    useBookNow(form)
-      .then(response => {
-        if (response.message) {
-          message.success(response.message)
-          setTimeout(() => {
-            Router.push("/checkout");
-          }, 500);
-        } else {
-          message.error(response.message)
-        }
-        setBookingLoading(false)
-      }).catch(error => {
-        console.log(error)
-        setBookingLoading(false)
-      })
-
-  }
-
-
+export default function RoomDetail(props) {
+  const { onClose } = props
   return (
     <div className="room-detail-container">
       <style jsx>
@@ -144,47 +61,43 @@ const RoomDetail = ({ props }) => {
       <div className="container f">
         <div className="left">
           <div className="gallery-slider">
-            <Gallery images={room.photos} />
+            <Gallery images={["https://app.mykampoong.com/storage/taro/akomodasi/tegal-dukuh-camp/Taro_Rice Field Cottage_1.jpg", "https://app.mykampoong.com/storage/taro/akomodasi/tegal-dukuh-camp/Taro_Rice Field Cottage_5.jpg"]} />
           </div>
         </div>
         <div className="right">
           <div className="info-room-detail">
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-              <div>
-                <Title level={3}>{room.room_type_name}</Title>
-                <Title style={{ marginTop: 5 }} level={5}>{room.room_type_code}</Title>
-              </div>
+              <Title level={3}>Family Delux</Title>
               <CloseOutlined onClick={onClose} style={{ fontSize: 20 }} />
             </div>
             <div className='separator' />
             <div>
-              <Title level={5}>{t("Amenities")}</Title>
+              <Title level={5}>Amenities</Title>
               <div className='f f-w' style={{ margin: '28px 0 10px' }}>
                 <FacilityItem small width={130} title='Wifi' img='/images/icon/rss.svg' />
                 <FacilityItem small width={130} title='Breakfast' img='/images/icon/restaurant.svg' />
                 <FacilityItem small width={130} title='Coffee' img='/images/icon/coffee.svg' />
                 <FacilityItem small width={130} title='Air Conditioner' img='/images/icon/wallpaper.svg' />
               </div>
-              {facilities.length > 0 && facilities.map((f, index) => <div key={index}><Text>{f}</Text><br /></div>)}
             </div>
             <div className='separator' />
             <div>
-              <Title level={5}>{t("Room description")}</Title>
-              {room.description ? <Text>{room.description}</Text> : <Text>{t("No description found")}</Text>}
+              <Title level={5}>Room description</Title>
+              <Text> Bersantai di kamar Classic kami yang menawarkan fasilitas bernuansa Bali dalam suasana yang benar-benar modern. Kamar seluas 34 meter persegi memiliki pilihan tempat tidur king atau tempat tidur twin. Kamar mandi dengan 4-perlengkapannya dilengkapi rain shower dan bathtub.</Text>
             </div>
           </div>
           <div className="book-room">
             <div style={{ margin: 20 }}>
-              {/* <div style={{ margin: '20px 0' }} style={{ position: "relative" }}>
+              <div style={{ margin: '20px 0' }} style={{ position: "relative" }}>
                 <AddDay />
                 <div>
                   <GuestRoom />
                 </div>
-              </div> */}
-              <Title level={3} style={{ letterSpacing: '.02em', margin: "10px 0" }}>{currency(props.price)} <span style={{ fontSize: 18, fontWeight: 400 }}>{t("/ room / night")}</span></Title>
+              </div>
+              <Title level={3} style={{ letterSpacing: '.02em', margin: "10px 0" }}>Rp. {parseNumber(5000000 * 1)} <span style={{ fontSize: 18, fontWeight: 400 }}>/ room / night</span></Title>
               <div className='f f-c'>
-                <Button type='primary' size='small' loading={addToCartLoading} style={{ height: 36, width: "100%", marginBottom: 12 }} onClick={() => handleAddtoCart(vacationId)}>{t("Add to my trip")}</Button>
-                <Button size='small' loading={bookingLoading} style={{ height: 36, width: "100%" }} onClick={() => handleBookNow(vacationId)}>{t("Book now")}</Button>
+                <Button type='primary' size='small' style={{ height: 36, width: "100%", marginBottom: 12 }}>Add to My trip</Button>
+                <Button size='small' style={{ height: 36, width: "100%" }}>Book now</Button>
               </div>
             </div>
           </div>
@@ -193,5 +106,3 @@ const RoomDetail = ({ props }) => {
     </div>
   )
 }
-
-export default RoomDetail

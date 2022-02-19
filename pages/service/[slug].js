@@ -1,12 +1,10 @@
-import Header from "next/head";
-import Layout from "components/Layout/Public";
-import MetaHead from "components/_Meta/MetaHead";
-import ServiceDetails from "components/_ServiceDetails";
-import { useVacation as VacationContext } from "libs/hooks/vacation";
 import { fetchServiceDetail } from "modules/service/get-service-detail";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useVacation as VacationContext } from "libs/hooks/vacation";
+import Layout from "components/Layout/Public";
+import ServiceDetails from "components/_ServiceDetails";
+import Header from "next/head";
 
-export async function getServerSideProps({ query, res, locale }) {
+export async function getServerSideProps({ query, res }) {
   const { slug } = query;
   const data = await fetchServiceDetail(slug);
   if (!data?.success) {
@@ -16,7 +14,6 @@ export async function getServerSideProps({ query, res, locale }) {
   }
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
       data
     }
   };
@@ -25,7 +22,9 @@ export async function getServerSideProps({ query, res, locale }) {
 export default function ServiceDetailsPage({ data }) {
   return (
     <VacationContext.Provider initialState={data}>
-      <MetaHead description="Service" title={"Service | MyKampoong"} />
+      <Header>
+        <title>{data.vacation.name} | MyKampoong</title>
+      </Header>
       <Layout>
         <ServiceDetails />
       </Layout>

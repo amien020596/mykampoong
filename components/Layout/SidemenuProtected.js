@@ -1,16 +1,15 @@
-import {
-  AppstoreOutlined,
-  CalendarOutlined,
-  DollarOutlined,
-  MessageOutlined,
-  QrcodeOutlined,
-  SafetyCertificateOutlined,
-  UserOutlined
-} from '@ant-design/icons'
-
-import Link from 'next/link'
-import Menu from 'antd/lib/menu'
+import { Menu } from 'antd'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+import {
+  CalendarOutlined,
+  UserOutlined,
+  AppstoreOutlined,
+  MessageOutlined,
+  DollarOutlined,
+  QrcodeOutlined,
+  SafetyCertificateOutlined
+} from '@ant-design/icons'
 
 const menu = [
   {

@@ -1,17 +1,14 @@
-import AllOrderWrapper from 'components/_Dashboard/AllOrderWrapper'
+import { Typography } from 'antd'
 import Layout from 'components/Layout/Protected'
-import Typography from 'antd/lib/typography'
-
+import AllOrderWrapper from 'components/_Dashboard/AllOrderWrapper'
 const { Title } = Typography
-function Order() {
+export default function Order() {
   return (
     <div>
       <Layout>
-        <Title level={3} style={{ marginBottom: 24 }}>Order</Title>
+        <Title level={3} style={{marginBottom: 24}}>Order</Title>
         <AllOrderWrapper />
       </Layout>
     </div>
   )
 }
-
-export default Order;

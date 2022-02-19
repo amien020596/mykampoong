@@ -1,15 +1,8 @@
-import ReviewItem from "components/Experience/ReviewItem";
+import { Typography } from "antd";
 import { StarFilled } from "@ant-design/icons";
-import Typography from 'antd/lib/typography';
-import { useTranslation } from "next-i18next";
-
+import ReviewItem from "components/Experience/ReviewItem";
 const { Title, Text } = Typography;
-const Review = ({
-  reviews = [],
-  count,
-  rating,
-}) => {
-  const { t } = useTranslation('common')
+export default function Review({ reviews = [], count, rating }) {
   return (
     <div>
       <style jsx>
@@ -31,7 +24,7 @@ const Review = ({
           color: "var(--gray800)"
         }}
       >
-        {count || 0} {t("Reviews")}
+        {count || 0} Reviews
         <span style={{ fontSize: 14, color: "var(--gray600)", marginLeft: 12 }}>
           <StarFilled
             style={{ color: "var(--orange500)", fontSize: 20, marginRight: 6 }}
@@ -42,7 +35,7 @@ const Review = ({
       <div className="f f-w review-wrapper">
         {reviews?.length === 0 && (
           <div className="f f-ctr mdl w-full">
-            <Text>{t("No review item")}</Text>
+            <Text>No review item</Text>
           </div>
         )}
         {reviews !== null &&
@@ -53,6 +46,3 @@ const Review = ({
     </div>
   );
 }
-
-
-export default Review

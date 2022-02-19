@@ -1,5 +1,4 @@
-import Typography from 'antd/lib/typography'
-
+import { Typography } from 'antd'
 const { Title, Text } = Typography
 
 export default function Box({ title, description }) {

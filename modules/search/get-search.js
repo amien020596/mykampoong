@@ -1,7 +1,6 @@
-import { config } from "../../constants";
-import fetcher from "libs/fetcher/fetcher";
-import qs from "query-string";
+import fetcher from "libs/fetcher";
 import useSWR from "swr";
+import qs from "query-string";
 
 const useSearchList = (
   category,
@@ -13,9 +12,9 @@ const useSearchList = (
     revalidateOnFocus: false
   }
 ) => {
-
   const query = qs.stringify(search);
-  const url = config.NEXT_PUBLIC_API_URL + `/vacation/${category}?${query}`;
+  const url =
+    process.env.NEXT_PUBLIC_API_URL + `/vacation/${category}?${query}`;
   const searchSWR = useSWR(category ? url : null, fetcher, options);
   return searchSWR;
 };

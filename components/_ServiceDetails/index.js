@@ -1,28 +1,22 @@
-import { EnvironmentOutlined, StarFilled } from "@ant-design/icons";
-import { parseDate, parseName } from "libs/helpers/parser/parser";
-
-import Avatar from 'antd/lib/avatar'
 import Breadcrumb from "./Breadcrumb";
-import Button from 'antd/lib/button'
-import Float from "./Float";
-import { useFloat as FloatContext } from "libs/hooks/float";
 import Gallery from "components/Gallery";
+import Float from "./Float";
 import Location from "components/_StayDetail/Location";
+import Review from "components/_StayDetail/Review";
+import Tag from "components/Tag";
+import { Typography, Button, Avatar, Empty } from "antd";
+import { useVacation } from "libs/hooks/vacation";
+import { useFloat as FloatContext } from "libs/hooks/float";
+import { EnvironmentOutlined, StarFilled } from "@ant-design/icons";
+import { parseDate, parseName } from "libs/parser";
+import MetaHead from "components/_Meta/MetaHead";
+import { useState } from "react";
 import ModalAllReview from "components/_Reviews/ModalAllReview";
 import Reviews from "components/_Reviews/Reviews";
-import Tag from "components/Tag";
-import Typography from 'antd/lib/typography';
-import { useState } from "react";
-import { useTranslation } from "next-i18next";
-import { useVacation } from "libs/hooks/vacation";
 
 const { Text, Title } = Typography;
 const MINIMUM_REVIEW_SHOW_BUTTON = 5;
-
-
-
-const ServiceDetails = () => {
-  const { t } = useTranslation('common')
+export default function ServiceDetails() {
   const [visibleModalReview, setVisibleModalReview] = useState(false);
   const { data } = useVacation.useContainer();
   const { vacation: item, review: reviewsData } = data;
@@ -68,6 +62,15 @@ const ServiceDetails = () => {
           }
         `}
       </style>
+      <MetaHead
+        site_name={"mykampoong"}
+        title={item?.name}
+        description={item?.description}
+        image={item?.featured_image}
+        imagetype={"image/jpg"}
+        imagewidth={"1200"}
+        imageheight={"1200"}
+      />
       <div className="f mdl f-btw" style={{ padding: "28px 0" }}>
         <Breadcrumb />
       </div>
@@ -94,7 +97,7 @@ const ServiceDetails = () => {
             <div className="info-wrapper f mdl">
               <div className="info-item">
                 <img src="/images/icon/time.svg" style={{ marginRight: 20 }} />
-                <Text style={{ fontWeight: 500 }}>{t("Up to hour hours", { hour: 4 })}</Text>
+                <Text style={{ fontWeight: 500 }}>Up to 4 hours</Text>
               </div>
               <div className="info-item">
                 <img
@@ -108,7 +111,7 @@ const ServiceDetails = () => {
               level={4}
               style={{ fontWeight: 500, letterSpacing: ".03em" }}
             >
-              {t("Description")}
+              Description
             </Title>
             <Text style={{ fontSize: 16, lineHeight: "22.67px" }}>
               {item.description}
@@ -127,17 +130,17 @@ const ServiceDetails = () => {
                     fontWeight: 500
                   }}
                 >
-                  {t("Hosted by")} {item.tourist_actors.owner_name}
+                  Hosted by {item.tourist_actors.owner_name}
                 </Title>
                 <Text style={{ color: "var(--gray500)" }}>
-                  {t("Joined since")}{" "}
+                  Joined since{" "}
                   {parseDate(item.tourist_actors.joined_date, {
                     year: "numeric",
                     month: "long"
                   })}
                 </Text>
                 <div style={{ marginTop: 24 }}>
-                  <Button>{t("Send message")}</Button>
+                  <Button>Send message</Button>
                 </div>
               </div>
               <div>
@@ -166,7 +169,7 @@ const ServiceDetails = () => {
           color: "var(--gray800)"
         }}
       >
-        {item.count_review || 0} {t("Reviews")}
+        {item.count_review || 0} Reviews
         <span style={{ fontSize: 14, color: "var(--gray600)", marginLeft: 12 }}>
           <StarFilled
             style={{ color: "var(--orange500)", fontSize: 20, marginRight: 6 }}
@@ -177,7 +180,7 @@ const ServiceDetails = () => {
       <Reviews data={reviewsData} />
       {lengthReview > MINIMUM_REVIEW_SHOW_BUTTON && (
         <Button onClick={toggleModalAllReview}>
-          {t("View all length reviews", { length: lengthReview })}
+          View all {lengthReview} reviews
         </Button>
       )}
       <ModalAllReview
@@ -188,6 +191,3 @@ const ServiceDetails = () => {
     </div>
   );
 }
-
-
-export default ServiceDetails

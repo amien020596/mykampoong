@@ -1,24 +1,16 @@
-import Explore from "components/_Experience/Explore";
-import Head from "next/head";
-import Hero from "components/_Experience/Hero";
-import Layout from "components/Layout/Public";
-import Loading from "components/Response/Loading";
-import MetaHead from "components/_Meta/MetaHead";
-import Pick from "components/Pick";
-import PopularLocation from "components/_Stay/PopularLocation";
-import { groupByLocation } from "libs/group-by-location";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useExperienceList } from "modules/experience/get-experience-list";
+import { groupByLocation } from "libs/group-by-location";
 import { useRouter } from "next/router";
 
-export async function getServerSideProps({ locale }) {
+import Layout from "components/Layout/Public";
+import Hero from "components/_Experience/Hero";
+import PopularLocation from "components/_Stay/PopularLocation";
+import DesaWisata from "components/_Stay/DesaWisata";
+import Pick from "components/Pick";
+import Loading from "components/Response/Loading";
+import Explore from "components/_Experience/Explore";
+import Head from "next/head";
 
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  }
-}
 export default function ExperiencePage() {
   const { query } = useRouter();
   const { data, error } = useExperienceList({
@@ -32,7 +24,9 @@ export default function ExperiencePage() {
 
   return (
     <>
-      <MetaHead description="Experience" title={"Experience | MyKampoong"} />
+      <Head>
+        <title>Experience | MyKampoong</title>
+      </Head>
       <Layout>
         <Hero />
         {!data && !error && <Loading />}

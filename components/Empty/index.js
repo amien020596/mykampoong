@@ -1,6 +1,5 @@
-import Button from 'antd/lib/button'
+import { Button } from 'antd'
 import Link from 'next/link'
-
 export default function Empty({ btnText, btnLink }) {
   return (
     <div

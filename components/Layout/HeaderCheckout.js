@@ -1,21 +1,17 @@
-import CheckoutContext from 'libs/hooks/checkout'
-import Link from 'next/link'
+import { Typography } from 'antd'
 import { RightOutlined } from '@ant-design/icons'
-import Typography from 'antd/lib/typography'
-
+import CheckoutContext from 'libs/hooks/checkout'
 const { Text } = Typography
 
 export default function HeaderCheckout() {
   const { step } = CheckoutContext.useContainer()
   return (
-    <div className='header' style={{ boxShadow: 'var(--shadowBase)' }}>
+    <div className='header' style={{boxShadow: 'var(--shadowBase)'}}>
       <div className='container f mdl f-btw'>
         <div className='f mdl'>
-          <Link href="/">
-            <a className='logo'>
-              <img height="70" style={{ paddingTop: 5, paddingBottom: 5 }} src='/images/headerlogonotagline.png' />
-            </a>
-          </Link>
+          <a className='logo'>
+            <img src='/images/logo.svg' />
+          </a>
         </div>
         <div>
           <div className='f mdl'>
@@ -26,7 +22,7 @@ export default function HeaderCheckout() {
             <a className={`menu-item ${step < 2 && 'disabled'}`}>
               <Text>2. Payment</Text>
             </a>
-            <RightOutlined style={{ color: step < 2 && 'var(--gray400)' }} />
+            <RightOutlined style={{color: step < 2 && 'var(--gray400)'}}/>
             <a className={`menu-item ${step < 3 && 'disabled'}`}>
               <Text>3. Complete</Text>
             </a>

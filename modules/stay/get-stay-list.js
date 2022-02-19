@@ -1,8 +1,6 @@
-import { config } from "../../constants";
-import { publicAxiosGet } from "libs/fetcher/fetcher-get";
-import { publicFetcherAxios } from "libs/fetcher/fetcher";
-import qs from "query-string";
+import fetcher from "libs/fetcher";
 import useSWR from "swr";
+import qs from "query-string";
 
 const useStayList = (
   query,
@@ -10,10 +8,10 @@ const useStayList = (
     revalidateOnFocus: false
   }
 ) => {
-  console.log("or here")
   const params = qs.stringify(query);
-  const url = config.NEXT_PUBLIC_API_URL + "/vacation/staycation/?" + params;
-  const stayListSWR = useSWR(url, publicAxiosGet, options);
+  const url =
+    process.env.NEXT_PUBLIC_API_URL + "/vacation/staycation/?" + params;
+  const stayListSWR = useSWR(url, fetcher, options);
   return stayListSWR;
 };
 

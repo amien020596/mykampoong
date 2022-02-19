@@ -1,30 +1,57 @@
-import { useRef, useState } from "react";
-
-import Empty from 'antd/lib/empty'
-import ListReview from "components/_Reviews/ListReview";
+import { Select, Typography, Empty } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import Review from "components/_StayDetail/Review";
-import Scrollbars from "react-custom-scrollbars";
-import Select from 'antd/lib/select'
-import { StarFilled } from "@ant-design/icons";
-import Typography from 'antd/lib/typography';
-import { useTranslation } from "next-i18next";
+import { useRef, useState } from "react";
 import { useVacation } from 'libs/hooks/vacation';
-
+import { StarFilled } from "@ant-design/icons";
+import ListReview from "components/_Reviews/ListReview";
+import Scrollbars from "react-custom-scrollbars";
 const { Option } = Select
 const { Title, Text } = Typography;
-const ModalAllReview = ({
-  dataReview = [],
-  onClose = () => { },
-  visible = false,
-}) => {
-  const { t } = useTranslation('common')
+const review = [
+  {
+    id: 1,
+    avatar: "/images/icon/profile-default.png",
+    date: "12 desember 2020",
+    rating: "4",
+    review: "4 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  }, {
+    id: 1,
+    avatar: "/images/icon/profile-default.png",
+    date: "12 desember 2020",
+    rating: "3",
+    review: "3 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  },
+  {
+    id: 1,
+    avatar: "/images/icon/profile-default.png",
+    date: "12 desember 2020",
+    rating: "5",
+    review: "5 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  },
+  {
+    id: 1,
+    avatar: "/images/icon/profile-default.png",
+    date: "12 desember 2020",
+    rating: "2",
+    review: "2 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  },
+  {
+    id: 1,
+    avatar: "/images/icon/profile-default.png",
+    date: "12 desember 2020",
+    rating: "1",
+    review: "1 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  }
+]
+
+export default function ModalAllReview(props) {
   const { data } = useVacation.useContainer()
   const { vacation: item } = data
 
-  let review = dataReview
+  let review = props.dataReview
 
-  const [dataReviews, setDataReview] = useState(() => {
+  const [dataReview, setDataReview] = useState(() => {
     if (review == null || review == []) {
       return [];
     } else {
@@ -33,7 +60,7 @@ const ModalAllReview = ({
   })
 
   function onClose() {
-    onClose();
+    props.onClose();
   }
 
   function onChangeFilter(value) {
@@ -44,10 +71,10 @@ const ModalAllReview = ({
       setDataReview(review)
     }
   }
-  let margin = dataReviews.length > 0 ? { margin: "0 50px", marginTop: 20, width: "calc(100%-50px)", height: "100%" } : { width: "calc(100%-50px)", height: "100%" };
+  let margin = dataReview.length > 0 ? { margin: "0 50px", marginTop: 20, width: "calc(100%-50px)", height: "100%" } : { width: "calc(100%-50px)", height: "100%" };
   return (
     <Modal
-      visible={visible}
+      visible={props.visible}
       title={
         <div className="review-filter">
           <div style={{ position: "absolute", top: 22 }}>
@@ -60,7 +87,7 @@ const ModalAllReview = ({
                 color: "var(--gray800)"
               }}
             >
-              {item.count_review || 0} {t("Reviews")}
+              {item.count_review || 0} Reviews
               <span style={{ fontSize: 14, color: "var(--gray600)", marginLeft: 12 }}>
                 <StarFilled
                   style={{ color: "var(--orange500)", fontSize: 20, marginRight: 6 }}
@@ -70,7 +97,7 @@ const ModalAllReview = ({
             </Title>
           </div>
           <Select defaultValue='all' className='btn-style filter-position' onChange={onChangeFilter} style={{ marginLeft: 12, position: "absolute", top: 16, left: 200 }} >
-            <Option value='all'>{t("All Ratings")}</Option>
+            <Option value='all'>All Ratings</Option>
             <Option value='5'>5 Star</Option>
             <Option value='4'>4 Star</Option>
             <Option value='3'>3 Star</Option>
@@ -95,17 +122,14 @@ const ModalAllReview = ({
         <div
           style={margin}
         >
-          {dataReviews.length > 0 && dataReviews.map((dataListReview, index) => <ListReview key={index} data={dataListReview} />)}
-          {dataReviews.length == 0 && <div style={{
+          {dataReview.length > 0 && dataReview.map((dataListReview, index) => <ListReview key={index} data={dataListReview} />)}
+          {dataReview.length == 0 && <div style={{
             display: "flex", justifyContent: "center", position: "absolute", top: "50%", left: "50%",
             msTransform: "translate(-50%, -50%)",
             transform: "translate(-50%, -50%)"
-          }}><Empty description={`${("No review found")}`} /></div>}
+          }}><Empty description={"No review found"} /></div>}
         </div>
       </Scrollbars>
     </Modal>
   )
 }
-
-
-export default ModalAllReview

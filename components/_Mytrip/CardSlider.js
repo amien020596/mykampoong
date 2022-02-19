@@ -1,15 +1,11 @@
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { useEffect, useRef } from "react";
-
 import Card from "components/Card";
-import Typography from 'antd/lib/typography';
-import { useTranslation } from 'next-i18next';
-
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { useRef, useEffect } from "react";
+import { Typography, Tabs } from "antd";
 const { Title } = Typography;
-const CardSlider = ({
+export default function CardSlider({
   data = []
-}) => {
-  const { t } = useTranslation('common')
+}) {
 
 
   const hidden = data.length <= 3 ? { display: "none" } : {};
@@ -93,8 +89,8 @@ const CardSlider = ({
           `}
       </style>
       <Title style={{ fontWeight: 500, letterSpacing: '.03em' }} level={3}>
-        {t("Experience nearby")} Kanto lampo waterfall
-        <a style={{ fontSize: 16, marginLeft: 16 }}>{t("View more")}</a>
+        Experience nearby Kanto lampo waterfall
+        <a style={{ fontSize: 16, marginLeft: 16 }}>View more</a>
       </Title>
       <div className="content">
         <div id="prev" className="btn" style={hidden} ref={btnLeft}>
@@ -112,6 +108,3 @@ const CardSlider = ({
     </div>
   )
 }
-
-
-export default CardSlider

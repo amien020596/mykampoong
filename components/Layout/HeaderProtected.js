@@ -1,16 +1,12 @@
-import { MessageOutlined, NotificationOutlined } from '@ant-design/icons'
-
-import Avatar from 'antd/lib/avatar'
-import Badge from 'antd/lib/badge'
-import Typography from 'antd/lib/typography'
-
+import { Avatar, Badge, Typography } from 'antd'
+import { NotificationOutlined, MessageOutlined } from '@ant-design/icons'
 const { Text } = Typography
 export default function HeaderProtected() {
   return (
     <div className='header'>
       <div className='container f f-btw mdl'>
         <a className='logo'>
-          <img height="70" style={{ paddingTop: 5, paddingBottom: 5 }} src='/images/headerlogonotagline.png' />
+          <img src='/images/logo.svg' />
           <Text style={{ fontSize: 20, color: 'var(--gray600)', marginLeft: 6, letterSpacing: '.03em' }}>Host</Text>
         </a>
         <div className='f mdl'>

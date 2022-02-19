@@ -1,6 +1,4 @@
-import Avatar from 'antd/lib/avatar'
-import Typography from 'antd/lib/typography'
-
+import { Avatar, Typography } from 'antd'
 const { Text } = Typography
 export default function Location({ data: item }) {
   return (

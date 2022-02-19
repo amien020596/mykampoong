@@ -1,13 +1,10 @@
-import Card from "../../Card";
-import Scrollbars from "react-custom-scrollbars";
-import Typography from 'antd/lib/typography';
+import { Typography } from "antd";
 import { useHome } from "libs/hooks/home";
-import { useTranslation } from "next-i18next";
-
+import Scrollbars from "react-custom-scrollbars";
+import Card from "../../Card";
 const { Title } = Typography;
 
-function BestValue() {
-  const { t } = useTranslation("common")
+export default function BestValue() {
   const { data } = useHome.useContainer();
   const section = data.sectionThree;
   return (
@@ -24,11 +21,10 @@ function BestValue() {
           </style>
           <div className="container">
             <Title style={{ textAlign: "center", color: "#fff" }}>
-              {t(`${section.title}`)}
+              {section.title}
             </Title>
             <Scrollbars
               autoHide
-              universal
               style={{ width: "100%", height: 430, marginTop: 70 }}
             >
               <div className="f">
@@ -43,5 +39,3 @@ function BestValue() {
     </>
   );
 }
-
-export default BestValue

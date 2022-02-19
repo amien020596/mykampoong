@@ -1,16 +1,11 @@
+import { Avatar, Typography, Button, Tag } from "antd";
 import {
-  DownOutlined,
   EnvironmentOutlined,
   MailOutlined,
-  PhoneOutlined
+  PhoneOutlined,
+  DownOutlined
 } from "@ant-design/icons";
-
-import Avatar from 'antd/lib/avatar'
-import Button from 'antd/lib/button'
 import ContentWrapper from "./ContentWrapper";
-import Tag from 'antd/lib/tag'
-import Typography from 'antd/lib/typography';
-
 const { Title, Text } = Typography;
 
 export default function Profile() {

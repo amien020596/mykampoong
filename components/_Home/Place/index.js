@@ -1,13 +1,8 @@
-import Box from './Box'
-import Button from 'antd/lib/button'
-import Typography from 'antd/lib/typography'
+import { Typography, Button } from 'antd'
 import { useHome } from 'libs/hooks/home'
-import { useTranslation } from 'next-i18next';
-
+import Box from './Box'
 const { Title, Text } = Typography
-function Place(
-) {
-  const { t } = useTranslation("common")
+export default function Place() {
   const { data } = useHome.useContainer()
   const section = data.sectionFive
   return (
@@ -50,13 +45,13 @@ function Place(
           >
             {section.description}
           </Text>
-          <Button ghost style={{ marginTop: 32 }}>{t("Explore")} {section.title}</Button>
+          <Button ghost style={{ marginTop: 32 }}>Explore {section.title}</Button>
           <div className='f f-w' style={{ width: 'calc(100% + 12px)', margin: '65px -6px 0' }}>
             {
               section.count_travel_object.map(i =>
-                <Box
-                  title={`${i.count_service}+`}
-                  description={i.name}
+                <Box 
+                  title={`${i.count_service}+`} 
+                  description={i.name} 
                   key={i.id}
                 />
               )
@@ -67,5 +62,3 @@ function Place(
     </div>
   )
 }
-
-export default Place
