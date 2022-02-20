@@ -5,7 +5,7 @@ export default function MetaHead(props) {
   const description = props?.description || "";
   const title = props?.title || "";
   const currentURL = props?.url || "";
-  const image = '/images/default_thumbnail.png'
+  const image = props?.featured_image || '/images/default_thumbnail.png';
   const name = props?.name || "";
   const featured_image = props?.featured_image || "";
   const imagetype = 'png'
