@@ -24,7 +24,7 @@ export default function MetaHead(props) {
       <meta name="twitter:creator" content={site_name} />
       // twitter open graph
       <meta property="og:url" content={currentURL} />
-      <meta property="og:image" itemProp="image" content={image} />
+      <meta property="og:image" itemProp="image" content={featured_image} />
       <meta property="og:site_name" content={site_name} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
