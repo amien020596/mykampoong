@@ -7,6 +7,7 @@ import { fetchStayDetail } from "modules/stay/get-stay-detail";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from "react";
 import reactImageSize from 'libs/helpers/image/reactImageSize';
+import { last, split } from 'lodash';
 
 
 
@@ -30,6 +31,7 @@ export default function StayDetailPage({ data }) {
 
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
+  const [extension, setExtension] = useState('');
 
   const dataStay = data.vacation || {};
   console.log('dataStay', dataStay)
@@ -43,6 +45,8 @@ export default function StayDetailPage({ data }) {
       .then(({ width, height }) => {
         setWidth(width)
         setHeight(height)
+        let url = split(dataStay.featured_image, '.')
+        setExtension(last(url));
       })
       .catch((errorMessage) => console.log("error message", errorMessage));
   });
@@ -58,6 +62,7 @@ export default function StayDetailPage({ data }) {
         featured_image={data.featured_image}
         width={width}
         height={height}
+        imageType={extension}
       />
       <Layout>
         <StayDetail />

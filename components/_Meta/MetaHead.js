@@ -8,7 +8,7 @@ export default function MetaHead(props) {
   const image = props?.featured_image || '/images/default_thumbnail.png';
   const name = props?.name || "";
   const featured_image = props?.featured_image || "";
-  const imagetype = 'png'
+  const imagetype = props?.imageType || "";
 
   const site_name = 'test'
   const imagewidth = props?.width || 0;
@@ -29,6 +29,9 @@ export default function MetaHead(props) {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
 
+      <meta property="og:image:type" content={imagetype} />
+      <meta property="og:image:width" content={imagewidth} />
+      <meta property="og:image:height" content={imageheight} />
 
 
       <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -37,9 +40,6 @@ export default function MetaHead(props) {
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"></link>
 
       <meta property="og:type" content="website" />
-      <meta property="og:image:type" content={imagetype} />
-      <meta property="og:image:width" content={imagewidth} />
-      <meta property="og:image:height" content={imageheight} />
       <meta name="twitter:site" content={site_name} />
 
       <meta property="twitter:site:id" content="1373245128081477639" /> // amien kurniawan
