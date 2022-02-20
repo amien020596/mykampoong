@@ -33,7 +33,8 @@ export default function MetaHead(props) {
       <meta property="og:image:alt" content={title} />
       <meta property="og:image:width" content={imagewidth} />
       <meta property="og:image:height" content={imageheight} />
-
+    // facebook
+      <meta property="fb:app_id" content={553158979390341} />
 
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link rel="manifest" href="/manifest.json" />
