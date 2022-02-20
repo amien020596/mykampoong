@@ -5,7 +5,10 @@ import StayDetail from "components/_StayDetail";
 import { useVacation as VacationContext } from "libs/hooks/vacation";
 import { fetchStayDetail } from "modules/stay/get-stay-detail";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import reactImageSize from 'libs/helpers/image/reactImageSize';
+
+
 
 export async function getServerSideProps({ query, locale }) {
   const { slug } = query;
@@ -24,9 +27,9 @@ export async function getServerSideProps({ query, locale }) {
 }
 
 export default function StayDetailPage({ data }) {
-  // useEffect(() => {
-  //   document.title = `${data?.vacation.name} | MyKampoong`;
-  // });
+
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
   const dataStay = data.vacation || {};
   console.log('dataStay', dataStay)
@@ -34,6 +37,16 @@ export default function StayDetailPage({ data }) {
   if (typeof window !== 'undefined') {
     currentURL = window.location.href
   }
+
+  useEffect(() => {
+    reactImageSize(dataStay.featured_image)
+      .then(({ width, height }) => {
+        setWidth(width)
+        setHeight(height)
+      })
+      .catch((errorMessage) => console.log("error message", errorMessage));
+  });
+
 
   return (
     <VacationContext.Provider initialState={data}>
@@ -43,6 +56,8 @@ export default function StayDetailPage({ data }) {
         url={currentURL}
         name={data.name}
         featured_image={data.featured_image}
+        width={width}
+        height={height}
       />
       <Layout>
         <StayDetail />

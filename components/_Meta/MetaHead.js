@@ -11,8 +11,8 @@ export default function MetaHead(props) {
   const imagetype = 'png'
 
   const site_name = 'test'
-  const imagewidth = 'test'
-  const imageheight = 'test'
+  const imagewidth = props?.width || 0;
+  const imageheight = props?.height || 0;
 
 
   return (
