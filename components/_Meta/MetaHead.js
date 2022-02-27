@@ -40,9 +40,9 @@ export default function MetaHead(props) {
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:title" content="GitHub" />
       <meta property="twitter:description" content="GitHub is where people build software. More than 73 million people use GitHub to discover, fork, and contribute to over 200 million projects." />
-      <meta property="twitter:image:src" content="https://github.githubassets.com/images/modules/open_graph/github-logo.png" />
-      <meta property="twitter:image:width" content="1200" />
-      <meta property="twitter:image:height" content="1200" />
+      <meta property="twitter:image:src" content={featured_image} />
+      <meta property="twitter:image:width" content={imagewidth} />
+      <meta property="twitter:image:height" content={imageheight} />
 
 
 
