@@ -20,7 +20,7 @@ export default function MetaHead(props) {
       <title>{title}</title>
       <meta name="description" content={description} />
       // twitter
-      <meta name="twitter:image" content={featured_image} />
+      <meta name="twitter:image" content={""} />
       <meta name="twitter:creator" content={site_name} />
       <meta property="twitter:site:id" content="1373245128081477639" /> // amien kurniawan
       <meta property="twitter:site" content={site_name} />
