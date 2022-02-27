@@ -6,6 +6,7 @@ import MetaHead from "components/_Meta/MetaHead";
 import PackageDetail from "components/_PackageDetail";
 import { useVacation as VacationContext } from "libs/hooks/vacation";
 import { fetchPackageDetail } from "modules/package/get-package-detail";
+import reactImageSize from "libs/helpers/image/reactImageSize";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export async function getServerSideProps({ query, res, locale }) {
