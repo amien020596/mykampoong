@@ -20,37 +20,25 @@ export default function MetaHead(props) {
       <title>{title}</title>
       <meta name="description" content={description} />
       // twitter
+      <meta name="twitter:image" content={featured_image} />
       <meta name="twitter:creator" content={site_name} />
-      <meta name="twitter:card" content="summary" />
-      {/* <meta name="twitter:site" content={site_name} /> */}
-      <meta name="twitter:image" content={featured_image}></meta>
-      {/* <meta property="twitter:image:src" content={featured_image} /> */}
       <meta property="twitter:site:id" content="1373245128081477639" /> // amien kurniawan
-      {/* <meta property="twitter:title" content={title} /> */}
-      {/* <meta property="twitter:description" content={description} /> */}
-      {/* <meta property="twitter:image" content={image} /> */}
-      {/* <meta property="twitter:image:alt" content={name} /> */}
-      {/* <meta property="twitter:image:width" content={imagewidth} /> */}
-      {/* <meta property="twitter:image:height" content={imageheight} /> */}
-
-      <meta property="twitter:site" content="github" />
+      <meta property="twitter:site" content={site_name} />
       {/* <meta property="twitter:site:id" content="13334762" /> */}
-      <meta property="twitter:creator" content="github" />
       {/* <meta property="twitter:creator:id" content="13334762" /> */}
+      <meta property="twitter:creator" content="www.mykampoong.com" />
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:title" content="GitHub" />
-      <meta property="twitter:description" content="GitHub is where people build software. More than 73 million people use GitHub to discover, fork, and contribute to over 200 million projects." />
+      <meta property="twitter:title" content={title} />
+      <meta property="twitter:description" content={description} />
       <meta property="twitter:image:src" content='https://dummyimage.com/600x600/000/fff.png' />
+      <meta property="twitter:image:alt" content={name} />
       <meta property="twitter:image:width" content={600} />
       <meta property="twitter:image:height" content={600} />
 
-
-
-
-      <meta property="og:image" content={"https://app.mykampoong.com/storage/taro/akomodasi/tegal-dukuh-camp/Taro_Rice_Field_Cottage_1.jpg"} />
       // twitter open graph
       <meta property="og:url" content={currentURL} />
       <meta property="og:image" itemProp="image" content={"https://app.mykampoong.com/storage/taro/akomodasi/tegal-dukuh-camp/Taro_Rice_Field_Cottage_1.jpg"} />
+      <meta property="og:image" content={"https://app.mykampoong.com/storage/taro/akomodasi/tegal-dukuh-camp/Taro_Rice_Field_Cottage_1.jpg"} />
       <meta property="og:site_name" content={site_name} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
