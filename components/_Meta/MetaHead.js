@@ -24,10 +24,10 @@ export default function MetaHead(props) {
       <meta name="twitter:creator" content={site_name} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content={site_name} />
-      <meta property="og:image" content={featured_image} />
+      <meta property="og:image" content={"https://app.mykampoong.com/storage/taro/akomodasi/tegal-dukuh-camp/Taro_Rice_Field_Cottage_1.jpg"} />
       // twitter open graph
       <meta property="og:url" content={currentURL} />
-      <meta property="og:image" itemProp="image" content={featured_image} />
+      <meta property="og:image" itemProp="image" content={"https://app.mykampoong.com/storage/taro/akomodasi/tegal-dukuh-camp/Taro_Rice_Field_Cottage_1.jpg"} />
       <meta property="og:site_name" content={site_name} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
