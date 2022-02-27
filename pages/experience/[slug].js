@@ -1,11 +1,14 @@
+import { last, split } from "lodash";
+import { useEffect, useState } from "react";
+
 import { useExperience as ExperienceContext } from "libs/hooks/experience";
 import ExperienceDetails from "components/_ExperienceDetails";
 import Layout from "components/Layout/Public";
 import MetaHead from "components/_Meta/MetaHead";
 import { useVacation as VacationContext } from "libs/hooks/vacation";
 import { fetchExperienceDetail } from "modules/experience/get-experience-detail";
+import reactImageSize from "libs/helpers/image/reactImageSize";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useEffect } from "react";
 
 export async function getServerSideProps({ query, locale }) {
   const { slug } = query;
