@@ -22,6 +22,9 @@ export default function MetaHead(props) {
       // twitter
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content={site_name} />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content={site_name} />
+      <meta property="og:image" content={featured_image} />
       // twitter open graph
       <meta property="og:url" content={currentURL} />
       <meta property="og:image" itemProp="image" content={featured_image} />
@@ -33,6 +36,8 @@ export default function MetaHead(props) {
       <meta property="og:image:alt" content={'my_kampoong'} />
       <meta property="og:image:width" content={imagewidth} />
       <meta property="og:image:height" content={imageheight} />
+
+
     // facebook
       <meta property="fb:app_id" content={553158979390341} />
 
@@ -42,7 +47,6 @@ export default function MetaHead(props) {
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"></link>
 
       <meta property="og:type" content="website" />
-      <meta name="twitter:site" content={site_name} />
 
       <meta property="twitter:site:id" content="1373245128081477639" /> // amien kurniawan
       <meta property="twitter:title" content={title} />
