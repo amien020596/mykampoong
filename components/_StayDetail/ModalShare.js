@@ -22,7 +22,7 @@ export default function ModalShare(props) {
   const pathTwitter = `http://twitter.com/share?url=${currentURL}`;
   const pathEmail = `https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&su=${bodyEmail}&body=${currentURL}`;
   const pathWhatsapp = `https://api.whatsapp.com/send?text=${currentURL}`;
-  const pathMessager = `https://www.facebook.com/dialog/send?app_id=553158979390341&link=https%3A%2F%2Fmykampoong.com&redirect_uri=https%3A%2F%2Fmykampoong.com`; // amien app id
+  const pathMessager = `https://www.facebook.com/dialog/send?app_id=553158979390341&link=${currentURL}&redirect_uri=${currentURL}`; // amien app id
   // `https://www.facebook.com/dialog/send?app_id=553158979390341&link=https%3A%2F%2F192.168.100.9:3000&redirect_uri=https%3A%2F%2F192.168.100.9:3000&href=https%3A%2F%2F192.168.100.9:3000`
 
   return (
