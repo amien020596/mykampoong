@@ -5,7 +5,7 @@ export default function MetaHead(props) {
   const description = props?.description || "";
   const title = props?.title || "";
   const currentURL = props?.url || "";
-  const image = props?.featured_image || '/images/default_thumbnail.png';
+  const image = props?.featured_image || '/images/rectangle_43.png';
   const name = props?.name || "";
   const featured_image = props?.featured_image || "";
   const imagetype = props?.imageType || "";
@@ -24,6 +24,7 @@ export default function MetaHead(props) {
       <meta name="twitter:creator" content={site_name} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:site" content={site_name} />
+      <meta name="twitter:image" content={featured_image}></meta>
       <meta property="og:image" content={"https://app.mykampoong.com/storage/taro/akomodasi/tegal-dukuh-camp/Taro_Rice_Field_Cottage_1.jpg"} />
       // twitter open graph
       <meta property="og:url" content={currentURL} />
