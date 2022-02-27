@@ -24,10 +24,39 @@ export async function getServerSideProps({ query, locale }) {
 }
 
 export default function ExperienceDetailsPage({ data }) {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [extension, setExtension] = useState('');
+
+  const dataStay = data.vacation || {};
+  let currentURL = ''
+  if (typeof window !== 'undefined') {
+    currentURL = window.location.href
+  }
+
+  useEffect(() => {
+    reactImageSize(dataStay.featured_image)
+      .then(({ width, height }) => {
+        setWidth(width)
+        setHeight(height)
+        let url = split(dataStay.featured_image, '.')
+        setExtension(last(url));
+      })
+      .catch((errorMessage) => console.log("error message", errorMessage));
+  });
 
   return (
     <VacationContext.Provider initialState={data}>
-      <MetaHead description="Experience" title={"Experience | MyKampoong"} />
+      <MetaHead
+        description={dataStay.description}
+        title={`${dataStay.name} Staycation | MyKampoong`}
+        url={currentURL}
+        name={data.name}
+        featured_image={data.featured_image}
+        width={width}
+        height={height}
+        imageType={extension}
+      />
       <ExperienceContext.Provider >
         <Layout>
           <ExperienceDetails />

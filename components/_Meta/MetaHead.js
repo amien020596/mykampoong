@@ -58,12 +58,6 @@ export default function MetaHead(props) {
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"></link>
 
       <meta property="og:type" content="website" />
-
-      {/* 
-      <link itemProp="thumbnailUrl" href={image} />
-      <span itemProp="thumbnail" itemScope={true} itemType={image}>
-        <link itemProp="url" href={image} />
-      </span> */}
     </Head>
   )
 }

@@ -1,15 +1,14 @@
+import { last, split } from 'lodash';
+import { useEffect, useState } from "react";
+
 import Head from 'next/head'
 import Layout from "components/Layout/Public";
 import MetaHead from 'components/_Meta/MetaHead';
 import StayDetail from "components/_StayDetail";
 import { useVacation as VacationContext } from "libs/hooks/vacation";
 import { fetchStayDetail } from "modules/stay/get-stay-detail";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useEffect, useState } from "react";
 import reactImageSize from 'libs/helpers/image/reactImageSize';
-import { last, split } from 'lodash';
-
-
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export async function getServerSideProps({ query, locale }) {
   const { slug } = query;
@@ -34,7 +33,6 @@ export default function StayDetailPage({ data }) {
   const [extension, setExtension] = useState('');
 
   const dataStay = data.vacation || {};
-  console.log('dataStay', dataStay)
   let currentURL = ''
   if (typeof window !== 'undefined') {
     currentURL = window.location.href
